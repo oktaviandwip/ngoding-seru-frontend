@@ -160,7 +160,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
 
   if (quizFinished) {
     return (
-      <div className="max-h-[80vh] overflow-auto">
+      <div className="max-h-[80vh] overflow-auto space-y-4">
         <Card>
           <CardHeader>
             <CardTitle>Quiz Finished</CardTitle>
@@ -201,7 +201,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
   if (!question) return <p>Loading</p>;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 mb-10">
       {/* Time Bar */}
       <div className="w-full h-5 border-[2px] rounded-full relative">
         <div
@@ -233,7 +233,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
       <div>{question.Question}</div>
       <div className="flex flex-col space-y-4">
         {["a", "b", "c", "d"].map((v) => (
-          <Button
+          <div
             key={v}
             className={`${
               selectedOption === v
@@ -241,11 +241,13 @@ export default function Quiz({ params }: { params: { type: string } }) {
                   ? "bg-green-500 hover:bg-green-500 text-white"
                   : "bg-red-500 hover:bg-red-500 text-white"
                 : "bg-secondary text-primary hover:bg-secondary"
-            }`}
+            } flex items-center justify-center text-center whitespace-normal break-words rounded-lg p-4 text-sm`}
             onClick={() => handleAnswer(v)}
           >
-            {question[`Option_${v}` as keyof Question]}
-          </Button>
+            <div className="flex">
+              {question[`Option_${v}` as keyof Question]}
+            </div>
+          </div>
         ))}
       </div>
     </div>
