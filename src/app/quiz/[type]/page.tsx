@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Image from "next/image";
-import Loading from "@/components/Loading"; // Ensure this is your loading component
+import Loading from "@/components/Loading";
 
 interface Question {
   Image: string;
@@ -48,7 +48,6 @@ type UserAnswer = {
 export default function Quiz({ params }: { params: { type: string } }) {
   const [data, setData] = useState<Question[]>([]);
   const [numbers, setNumbers] = useState<number[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [timer, setTimer] = useState(60);
   const [timerId, setTimerId] = useState<NodeJS.Timeout | null>(null);
@@ -97,7 +96,6 @@ export default function Quiz({ params }: { params: { type: string } }) {
 
   // Reordered Questions
   let reorderedQuestions: Question[] = [];
-  if (data) {
   if (data) {
     reorderedQuestions = numbers.map((number) => data[number - 1]);
   }
@@ -178,20 +176,8 @@ export default function Quiz({ params }: { params: { type: string } }) {
 
   const incorrectAnswersCount = userAnswers.length - correctAnswersCount;
 
-  // Calculate Score
-  const correctAnswersCount = userAnswers.filter(
-    (answer) => answer.userAnswer === answer.correctAnswer
-  ).length;
-
-  const incorrectAnswersCount = userAnswers.length - correctAnswersCount;
-
   // Current Question
   const question = reorderedQuestions[currentQuestionIndex];
-
-  // Render Loading Screen
-  if (isLoading) {
-    return <Loading />;
-  }
 
   // Render Loading Screen
   if (isLoading) {
@@ -257,9 +243,6 @@ export default function Quiz({ params }: { params: { type: string } }) {
     );
   }
 
-  if (!question) {
-    return <div>Loading...</div>;
-  }
   if (!question) {
     return <div>Loading...</div>;
   }
