@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -9,8 +8,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import Image from "next/image";
 
 interface Question {
+  Image: string;
   Question: string;
   Answer: string;
   Level: string;
@@ -230,6 +231,12 @@ export default function Quiz({ params }: { params: { type: string } }) {
       >
         {capitalizeFirstLetter(question.Level)}
       </div>
+      <Image
+        src={question.Image || ""}
+        alt="Image question"
+        width={100}
+        height={20}
+      />
       <div>{question.Question}</div>
       <div className="flex flex-col space-y-4">
         {["a", "b", "c", "d"].map((v) => (

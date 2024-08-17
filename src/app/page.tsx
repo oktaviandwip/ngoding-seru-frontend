@@ -11,6 +11,8 @@ import nodejs from "@/assets/nodejs.svg";
 import postgresql from "@/assets/postgresql.svg";
 import mysql from "@/assets/mysql.svg";
 import { useRouter } from "next/navigation";
+import { basicSetup, EditorView } from "codemirror";
+import { javascriptLang } from "@codemirror/lang-javascript";
 
 const frontendList = [
   { image: javascript, alt: "Javascript", link: "/javascript" },

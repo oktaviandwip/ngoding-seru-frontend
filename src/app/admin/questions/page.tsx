@@ -29,7 +29,6 @@ import Image from "next/image";
 import plusIcon from "@/assets/plus.svg";
 import { toast } from "@/components/ui/use-toast";
 
-
 // Define the validation schema
 const formSchema = z.object({
   image: z
@@ -54,6 +53,7 @@ const formSchema = z.object({
   option_b: z.string(),
   option_c: z.string(),
   option_d: z.string(),
+  explanation: z.string(),
   answer: z.string(),
 });
 
@@ -88,6 +88,7 @@ export default function UserProfileForm() {
       option_b: "",
       option_c: "",
       option_d: "",
+      explanation: "",
       answer: "a",
     },
   });
@@ -183,6 +184,7 @@ export default function UserProfileForm() {
     { name: "option_b", label: "Option B" },
     { name: "option_c", label: "Option C" },
     { name: "option_d", label: "Option D" },
+    { name: "explanation", label: "Explanation" },
   ];
 
   function capitalizeFirstLetter(str: string) {
