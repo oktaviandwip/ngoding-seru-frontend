@@ -186,30 +186,18 @@ export default function Quiz({ params }: { params: { type: string } }) {
 
   if (quizFinished) {
     return (
-      <div className="max-h-[80vh] overflow-auto space-y-4">
+      <div className="max-h-[80vh] overflow-auto space-y-4 pb-10">
         <Card>
           <CardHeader>
             <CardTitle>Quiz Finished</CardTitle>
             <CardDescription className="font-cofo-medium">
-              <span className="text-green-500">
-                Correct: {correctAnswersCount}
-              </span>
-              <span> - </span>
-              <span className="text-red-500">
+              <div className="text-green-500">
+                Correct:{correctAnswersCount}
+              </div>
+              <div className="text-red-500">
                 Incorrect: {incorrectAnswersCount}
-              </span>
+              </div>
             </CardDescription>
-            <CardDescription></CardDescription>
-            <CardDescription className="font-cofo-medium">
-              <span className="text-green-500">
-                Correct: {correctAnswersCount}
-              </span>
-              <span> - </span>
-              <span className="text-red-500">
-                Incorrect: {incorrectAnswersCount}
-              </span>
-            </CardDescription>
-            <CardDescription></CardDescription>
           </CardHeader>
         </Card>
 
@@ -285,8 +273,8 @@ export default function Quiz({ params }: { params: { type: string } }) {
         <Image
           src={question.Image}
           alt="Image question"
-          width={200}
-          height={200}
+          width={300}
+          height={300}
           quality={100}
           className="rounded-sm"
         />
