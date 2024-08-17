@@ -59,7 +59,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
   const [timerAdjustment, setTimerAdjustment] = useState<number | null>(null);
 
   // Set Loading Screen
-  const handleLoadingScreen = () => {
+  const removeLoadingScreen = () => {
     const timer = setTimeout(() => setIsLoading(false), 1000);
     return () => clearTimeout(timer);
   };
@@ -73,7 +73,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
     };
 
     fetchData();
-    handleLoadingScreen();
+    removeLoadingScreen();
   }, [params.type]);
 
   // Start Timer
@@ -83,7 +83,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
         if (prevTime <= 0) {
           clearInterval(id);
           setIsLoading(true);
-          handleLoadingScreen();
+          removeLoadingScreen();
           setQuizFinished(true);
           return 0;
         }
@@ -106,7 +106,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
       const newIndex = prevIndex + 1;
       if (newIndex >= reorderedQuestions.length) {
         setIsLoading(true);
-        handleLoadingScreen();
+        removeLoadingScreen();
         setQuizFinished(true);
         return prevIndex;
       }
