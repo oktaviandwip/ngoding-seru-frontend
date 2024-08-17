@@ -231,14 +231,16 @@ export default function Quiz({ params }: { params: { type: string } }) {
       >
         {capitalizeFirstLetter(question.Level)}
       </div>
-      <Image
-        src={question.Image || ""}
-        alt="Image question"
-        width={200}
-        height={200}
-        quality={100}
-        className="rounded-sm"
-      />
+      <div className="flex jutify-center md:justify-start">
+        <Image
+          src={question.Image || ""}
+          alt="Image question"
+          width={200}
+          height={200}
+          quality={100}
+          className="rounded-sm"
+        />
+      </div>
       <div>{question.Question}</div>
       <div className="flex flex-col space-y-4">
         {["a", "b", "c", "d"].map((v) => (
