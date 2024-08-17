@@ -231,7 +231,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
       >
         {capitalizeFirstLetter(question.Level)}
       </div>
-      <div className="flex jutify-center md:justify-start">
+      <div className="flex justify-center md:justify-start">
         <Image
           src={question.Image || ""}
           alt="Image question"
