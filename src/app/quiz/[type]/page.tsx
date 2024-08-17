@@ -199,7 +199,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
     );
   }
 
-  if (!question) return <p>Loading</p>;
+  if (!question) return <p>Loading...</p>;
 
   return (
     <div className="space-y-4 mb-10">
@@ -234,8 +234,10 @@ export default function Quiz({ params }: { params: { type: string } }) {
       <Image
         src={question.Image || ""}
         alt="Image question"
-        width={100}
-        height={20}
+        width={200}
+        height={200}
+        quality={100}
+        className="rounded-sm"
       />
       <div>{question.Question}</div>
       <div className="flex flex-col space-y-4">
@@ -248,7 +250,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
                   ? "bg-green-500 hover:bg-green-500 text-white"
                   : "bg-red-500 hover:bg-red-500 text-white"
                 : "bg-secondary text-primary hover:bg-secondary"
-            } flex items-center justify-center text-center whitespace-normal break-words rounded-lg p-4 text-sm`}
+            } flex items-center justify-center text-center whitespace-normal break-words rounded-lg p-2 text-sm`}
             onClick={() => handleAnswer(v)}
           >
             <div className="flex">

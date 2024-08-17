@@ -220,8 +220,8 @@ export default function UserProfileForm() {
                   src={plusIcon}
                   alt="Photo"
                   layout="contain"
-                  width={30}
-                  height={30}
+                  width={100}
+                  height={100}
                   quality={100}
                 />
                 <div>Add photo</div>
