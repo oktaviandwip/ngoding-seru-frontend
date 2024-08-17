@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Image from "next/image";
+import Loading from "@/components/Loading"; // Ensure this is your loading component
 
 interface Question {
   Image: string;
@@ -47,6 +48,7 @@ type UserAnswer = {
 export default function Quiz({ params }: { params: { type: string } }) {
   const [data, setData] = useState<Question[]>([]);
   const [numbers, setNumbers] = useState<number[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [timer, setTimer] = useState(60);
   const [timerId, setTimerId] = useState<NodeJS.Timeout | null>(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -55,6 +57,12 @@ export default function Quiz({ params }: { params: { type: string } }) {
   const [quizFinished, setQuizFinished] = useState(false);
   const [isCorrectAnswer, setIsCorrectAnswer] = useState<boolean | null>(null);
   const [timerAdjustment, setTimerAdjustment] = useState<number | null>(null);
+
+  // Set Loading Screen
+  const handleLoadingScreen = () => {
+    const timer = setTimeout(() => setIsLoading(false), 1000);
+    return () => clearTimeout(timer);
+  };
 
   // Get Data
   useEffect(() => {
@@ -65,6 +73,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
     };
 
     fetchData();
+    handleLoadingScreen();
   }, [params.type]);
 
   // Start Timer
@@ -73,6 +82,8 @@ export default function Quiz({ params }: { params: { type: string } }) {
       setTimer((prevTime) => {
         if (prevTime <= 0) {
           clearInterval(id);
+          setIsLoading(true);
+          handleLoadingScreen();
           setQuizFinished(true);
           return 0;
         }
@@ -85,7 +96,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
 
   // Reordered Questions
   let reorderedQuestions: Question[] = [];
-  if (data.length > 0) {
+  if (data) {
     reorderedQuestions = numbers.map((number) => data[number - 1]);
   }
 
@@ -94,6 +105,8 @@ export default function Quiz({ params }: { params: { type: string } }) {
     setCurrentQuestionIndex((prevIndex) => {
       const newIndex = prevIndex + 1;
       if (newIndex >= reorderedQuestions.length) {
+        setIsLoading(true);
+        handleLoadingScreen();
         setQuizFinished(true);
         return prevIndex;
       }
@@ -156,8 +169,20 @@ export default function Quiz({ params }: { params: { type: string } }) {
     return word.charAt(0).toUpperCase() + word.slice(1);
   };
 
+  // Calculate Score
+  const correctAnswersCount = userAnswers.filter(
+    (answer) => answer.userAnswer === answer.correctAnswer
+  ).length;
+
+  const incorrectAnswersCount = userAnswers.length - correctAnswersCount;
+
   // Current Question
   const question = reorderedQuestions[currentQuestionIndex];
+
+  // Render Loading Screen
+  if (isLoading) {
+    return <Loading />;
+  }
 
   if (quizFinished) {
     return (
@@ -165,7 +190,16 @@ export default function Quiz({ params }: { params: { type: string } }) {
         <Card>
           <CardHeader>
             <CardTitle>Quiz Finished</CardTitle>
-            <CardDescription>Time&apos;s up</CardDescription>
+            <CardDescription className="font-cofo-medium">
+              <span className="text-green-500">
+                Correct: {correctAnswersCount}
+              </span>
+              <span> - </span>
+              <span className="text-red-500">
+                Incorrect: {incorrectAnswersCount}
+              </span>
+            </CardDescription>
+            <CardDescription></CardDescription>
           </CardHeader>
         </Card>
 
@@ -199,7 +233,9 @@ export default function Quiz({ params }: { params: { type: string } }) {
     );
   }
 
-  if (!question) return <p>Loading...</p>;
+  if (!question) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="space-y-4 mb-10">

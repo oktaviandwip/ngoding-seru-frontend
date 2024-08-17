@@ -193,188 +193,183 @@ export default function UserProfileForm() {
   }
 
   return (
-    <div className="pt-28">
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-4 mb-10"
-        >
-          <div className="flex flex-col w-full space-y-2">
-            <div className="relative group cursor-pointer w-full min-h-24 flex items-center justify-center">
-              <div className={`${selectedImage ? "flex" : "hidden"}`}>
-                <Image
-                  src={selectedImage || ""}
-                  alt="Photo"
-                  width={200}
-                  height={200}
-                  quality={100}
-                />
-              </div>
-              <div
-                className={`${
-                  selectedImage ? "hidden" : "flex"
-                } items-center justify-center space-x-2`}
-                onClick={handleImageClick}
-              >
-                <Image
-                  src={plusIcon}
-                  alt="Photo"
-                  layout="contain"
-                  width={100}
-                  height={100}
-                  quality={100}
-                />
-                <div>Add photo</div>
-              </div>
-
-              <div
-                className={`${
-                  selectedImage ? "absolute" : "hidden"
-                } absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-sm font-semibold opacity-0 group-hover:opacity-100`}
-                onClick={handleImageClick}
-              >
-                Ganti Foto
-              </div>
-              {selectedImage && (
-                <button
-                  type="button"
-                  onClick={removeImage}
-                  className="hidden absolute top-1 right-[-6px] justify-center items-center bg-black bg-opacity-50 text-white rounded-full w-6 h-6 group-hover:flex"
-                >
-                  <DeleteIcon style={{ fontSize: 15 }} />
-                </button>
-              )}
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mb-10">
+        <div className="flex flex-col w-full space-y-2">
+          <div className="relative group cursor-pointer w-full min-h-24 flex items-center justify-center">
+            <div className={`${selectedImage ? "flex" : "hidden"}`}>
+              <Image
+                src={selectedImage || ""}
+                alt="Photo"
+                width={200}
+                height={200}
+                quality={100}
+              />
+            </div>
+            <div
+              className={`${
+                selectedImage ? "hidden" : "flex"
+              } items-center justify-center space-x-2`}
+              onClick={handleImageClick}
+            >
+              <Image
+                src={plusIcon}
+                alt="Photo"
+                layout="contain"
+                width={30}
+                height={30}
+                quality={100}
+              />
+              <div>Add photo</div>
             </div>
 
-            <FormField
-              control={form.control}
-              name="image"
-              render={() => (
-                <FormItem className="relative">
-                  <FormLabel>Photo</FormLabel>
-                  <FormControl>
-                    <Input readOnly placeholder={fileName || "Choose Image"} />
-                  </FormControl>
-                  <FormControl>
-                    <Input
-                      ref={fileInputRef}
-                      type="file"
-                      accept="image/jpeg, image/png"
-                      onChange={handleFileChange}
-                      className="opacity-0 absolute top-6"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <div className="flex space-x-4">
-              {selectFields.map((v) => (
-                <FormField
-                  key={v.name}
-                  control={form.control}
-                  name={v.name as keyof FormValues}
-                  render={() => (
-                    <FormItem className="w-1/2 md:w-32">
-                      <FormLabel>{v.label}</FormLabel>
-                      <FormControl>
-                        <Select
-                          onValueChange={(value) =>
-                            form.setValue(v.name as keyof FormValues, value)
-                          }
-                          value={
-                            (form.watch(v.name as keyof FormValues) ||
-                              "") as string
-                          }
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder={v.value[0]} />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {v.value.map((d) => (
-                              <SelectItem key={d} value={d}>
-                                {capitalizeFirstLetter(d)}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              ))}
+            <div
+              className={`${
+                selectedImage ? "absolute" : "hidden"
+              } absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-sm font-semibold opacity-0 group-hover:opacity-100`}
+              onClick={handleImageClick}
+            >
+              Ganti Foto
             </div>
+            {selectedImage && (
+              <button
+                type="button"
+                onClick={removeImage}
+                className="hidden absolute top-1 right-[-6px] justify-center items-center bg-black bg-opacity-50 text-white rounded-full w-6 h-6 group-hover:flex"
+              >
+                <DeleteIcon style={{ fontSize: 15 }} />
+              </button>
+            )}
+          </div>
 
-            {questionFields.map(({ name, label }) => (
+          <FormField
+            control={form.control}
+            name="image"
+            render={() => (
+              <FormItem className="relative">
+                <FormLabel>Photo</FormLabel>
+                <FormControl>
+                  <Input readOnly placeholder={fileName || "Choose Image"} />
+                </FormControl>
+                <FormControl>
+                  <Input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/jpeg, image/png"
+                    onChange={handleFileChange}
+                    className="opacity-0 absolute top-6"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <div className="flex space-x-4">
+            {selectFields.map((v) => (
               <FormField
-                key={name}
+                key={v.name}
                 control={form.control}
-                name={name as keyof FormValues}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{label}</FormLabel>
+                name={v.name as keyof FormValues}
+                render={() => (
+                  <FormItem className="w-1/2 md:w-32">
+                    <FormLabel>{v.label}</FormLabel>
                     <FormControl>
-                      <Textarea
-                        placeholder={label}
-                        {...field}
-                        value={field.value as string}
-                      />
+                      <Select
+                        onValueChange={(value) =>
+                          form.setValue(v.name as keyof FormValues, value)
+                        }
+                        value={
+                          (form.watch(v.name as keyof FormValues) ||
+                            "") as string
+                        }
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder={v.value[0]} />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {v.value.map((d) => (
+                            <SelectItem key={d} value={d}>
+                              {capitalizeFirstLetter(d)}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             ))}
+          </div>
 
+          {questionFields.map(({ name, label }) => (
             <FormField
+              key={name}
               control={form.control}
-              name="answer"
+              name={name as keyof FormValues}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Answer</FormLabel>
+                  <FormLabel>{label}</FormLabel>
                   <FormControl>
-                    <RadioGroup
-                      className="flex space-x-4"
-                      value={field.value}
-                      onValueChange={field.onChange}
-                    >
-                      {["a", "b", "c", "d"].map((v) => (
-                        <FormItem key={v} className="flex items-center">
-                          <RadioGroupItem
-                            value={v}
-                            id={v}
-                            className="mt-2 mr-1"
-                          />
-                          <FormLabel htmlFor={v}>
-                            {capitalizeFirstLetter(v)}
-                          </FormLabel>
-                        </FormItem>
-                      ))}
-                    </RadioGroup>
+                    <Textarea
+                      placeholder={label}
+                      {...field}
+                      value={field.value as string}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-          </div>
+          ))}
 
-          <div className="flex justify-end gap-4 pt-4">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={handleCancel}
-              className="w-1/2 sm:w-20"
-            >
-              Batalkan
-            </Button>
-            <Button type="submit" className="w-1/2 sm:w-20">
-              Simpan
-            </Button>
-          </div>
-        </form>
-      </Form>
-    </div>
+          <FormField
+            control={form.control}
+            name="answer"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Answer</FormLabel>
+                <FormControl>
+                  <RadioGroup
+                    className="flex space-x-4"
+                    value={field.value}
+                    onValueChange={field.onChange}
+                  >
+                    {["a", "b", "c", "d"].map((v) => (
+                      <FormItem key={v} className="flex items-center">
+                        <RadioGroupItem
+                          value={v}
+                          id={v}
+                          className="mt-2 mr-1"
+                        />
+                        <FormLabel htmlFor={v}>
+                          {capitalizeFirstLetter(v)}
+                        </FormLabel>
+                      </FormItem>
+                    ))}
+                  </RadioGroup>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <div className="flex justify-end gap-4 pt-4">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={handleCancel}
+            className="w-1/2 sm:w-20"
+          >
+            Batalkan
+          </Button>
+          <Button type="submit" className="w-1/2 sm:w-20">
+            Simpan
+          </Button>
+        </div>
+      </form>
+    </Form>
   );
 }
