@@ -238,9 +238,9 @@ export default function Quiz({ params }: { params: { type: string } }) {
   return (
     <div className="space-y-4 mb-10">
       {/* Time Bar */}
-      <div className="relative w-full h-5 pt-[0.5px] border-[2px] rounded-full">
+      <div className="relative w-full h-5 border-[2px] rounded-full">
         <div
-          className={`bg-white h-4 rounded-full`}
+          className={`bg-white h-[17px] rounded-full`}
           style={{ width: `${(timer / 60) * 100}%` }}
         />
         {timerAdjustment !== null && (
