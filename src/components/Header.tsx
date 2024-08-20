@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import logo from "@/assets/ngoding-seru-logo.png";
+import logo from "@/assets/ngoding-seru-logo-putih.png";
 import photoProfile from "@/assets/photo-profile.svg";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -45,10 +45,10 @@ export default function Header() {
   const navItems = pathname.startsWith("/admin") ? navAdmin : navUser;
 
   return (
-    <header className="fixed inset-x-0 flex items-center h-20 z-50 bg-white border-b-[1px]">
+    <header className="fixed inset-x-0 flex items-center h-20 z-50 bg-primary border-b-[1px]">
       <div className="container flex justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center space-x-4 font-cofo-black">
+        <Link href="/" className="flex items-center space-x-4">
           <Image
             src={logo}
             alt="Ngoding seru logo"
@@ -56,7 +56,7 @@ export default function Header() {
             height={80}
             quality={100}
           />
-          <div>NGODING SERU</div>
+          <h1>ngodingSeru</h1>
         </Link>
 
         {/* Navigation Menu */}
@@ -67,15 +67,17 @@ export default function Header() {
             const isActive = pathname.endsWith(item.href);
 
             return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`px-4 py-2 ${
-                  isActive ? "text-primary bg-secondary rounded-md" : ""
-                }`}
-              >
-                {item.label}
-              </Link>
+              <>
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`px-4 py-[10px] ${
+                    isActive ? "text-primary bg-white rounded-md" : "text-white"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              </>
             );
           })}
         </nav>
@@ -85,7 +87,7 @@ export default function Header() {
             <div className="flex lg:hidden bg-white mt-[2px]">
               <Icon
                 icon="mage:dash-menu"
-                className="text-primary size-7"
+                className="size-7 text-white"
                 onClick={() => setSidebarOpen(true)}
               />
             </div>
@@ -146,14 +148,16 @@ export default function Header() {
               className="flex lg:hidden"
               onClick={() => setSidebarOpen(true)}
             >
-              <Icon icon="mage:dash-menu" className="text-primary size-6" />
+              <Icon icon="mage:dash-menu" className="size-7 text-white" />
             </div>
             <div className="hidden lg:flex space-x-2">
               <Link href="/admin/questions">
-                <Button variant="outline">Admin</Button>
+                <Button>Admin</Button>
               </Link>
               <Link href="/login">
-                <Button>Masuk</Button>
+                <Button variant={"outline"} className="text-primary">
+                  Masuk
+                </Button>
               </Link>
             </div>
           </div>

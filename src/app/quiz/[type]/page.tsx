@@ -240,14 +240,14 @@ export default function Quiz({ params }: { params: { type: string } }) {
       {/* Time Bar */}
       <div className="w-full h-5 border-[2px] rounded-full relative">
         <div
-          className={`bg-primary h-4 rounded-full mt-[0.5px]`}
+          className={`bg-white h-4 rounded-full md:mt-[0.5px]`}
           style={{ width: `${(timer / 60) * 100}%` }}
         />
         {timerAdjustment !== null && (
           <div
             className={`${
               timerAdjustment > 0 ? "text-green-500" : "text-red-500"
-            } font-cofo-bold absolute`}
+            } font-bold absolute`}
             style={{
               left: `${(timer / 60) * 100}%`,
               transform: "translateX(-50%)",
@@ -259,7 +259,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
         )}
       </div>
       <div
-        className={`font-cofo-bold ${
+        className={`font-bold ${
           question.Level === "easy" ? "text-green-500" : "text-yellow-500"
         }`}
       >
@@ -290,7 +290,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
                   ? "bg-green-500 hover:bg-green-500 text-white"
                   : "bg-red-500 hover:bg-red-500 text-white"
                 : "bg-secondary text-primary hover:bg-secondary"
-            } flex items-center justify-center text-center whitespace-normal break-words rounded-lg p-2 text-sm`}
+            } flex items-center justify-center text-center rounded-lg p-2 text-sm`}
             onClick={() => handleAnswer(v)}
           >
             <div className="flex">

@@ -33,7 +33,9 @@ export default function Home() {
   return (
     <main className="space-y-12">
       <div className="space-y-6">
-        <div className="text-2xl font-cofo-medium">Frontend</div>
+        <h1 className="flex justify-center md:justify-start">
+          {"/* frontend */"}
+        </h1>
         <div className="grid grid-cols-3 md:grid-cols-6 gap-6">
           {frontendList.map((v) => (
             <Image
@@ -42,13 +44,16 @@ export default function Home() {
               alt={v.alt}
               width={100}
               height={100}
+              className="bg-white p-1 rounded-sm"
               onClick={() => router.push(`/quiz/${v.link}`)}
             />
           ))}
         </div>
       </div>
       <div className="space-y-6">
-        <div className="text-2xl font-cofo-medium">Backend</div>
+        <h1 className="flex justify-center md:justify-start">
+          {"/* backend */"}
+        </h1>
         <div className="grid grid-cols-3 md:grid-cols-6 gap-6">
           {backendList.map((v) => (
             <Image
@@ -57,6 +62,7 @@ export default function Home() {
               alt={v.alt}
               width={100}
               height={100}
+              className="bg-white p-1 rounded-sm"
               onClick={() => router.push(`/quiz/${v.link}`)}
             />
           ))}

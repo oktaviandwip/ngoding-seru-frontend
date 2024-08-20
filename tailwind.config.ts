@@ -19,11 +19,7 @@ const config = {
     },
     extend: {
       fontFamily: {
-        "cofo-regular": ['cofo-regular', 'sans-serif'],
-        "cofo-medium": ['cofo-medium', 'sans-serif'],
-        "cofo-bold": ['cofo-bold', 'sans-serif'],
-        "cofo-black": ['cofo-black', 'sans-serif'],
-        "cofo-regular-italic": ['cofo-regular-italic', 'sans-serif'],
+        "consolas": ['consolas', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -31,6 +27,9 @@ const config = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        black: {
+          DEFAULT: "hsl(var(--black))",
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",

@@ -3,7 +3,7 @@ import logo from "@/assets/ngoding-seru-logo-putih.png";
 
 export default function Footer() {
   return (
-    <footer className="bg-black text-white px-0 py-10 md:p-10">
+    <footer className="bg-primary text-white px-0 py-6 md:p-10 border-t">
       <div className="container flex items-center justify-start space-x-4 text-sm">
         <Image
           src={logo}

@@ -10,7 +10,7 @@
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
+    --primary: 0 0% 9.4%;
     --primary-foreground: 210 40% 98%;
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -69,26 +69,10 @@
 }
 
 @font-face {
-  font-family: "cofo-regular";
-  src: url("../../public/fonts/CoFoSans-Regular.ttf");
+  font-family: "consolas";
+  src: url("../../public/fonts/CONSOLA.TTF");
 }
 
-@font-face {
-  font-family: "cofo-medium";
-  src: url("../../public/fonts/CoFoSans-Medium.ttf");
-}
-
-@font-face {
-  font-family: "cofo-bold";
-  src: url("../../public/fonts/CoFoSans-Bold.ttf");
-}
-
-@font-face {
-  font-family: "cofo-black";
-  src: url("../../public/fonts/CoFoSans-Black.ttf");
-}
-
-@font-face {
-  font-family: "cofo-regular-italic";
-  src: url("../../public/fonts/CoFoRobert-RegularItalic.ttf");
+h1 {
+  @apply text-2xl font-bold tracking-widest;
 }

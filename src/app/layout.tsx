@@ -22,7 +22,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon-ngoding-seru.png" />
       </head>
-      <body className="font-cofo-regular antialiased">
+      <body className="font-consolas bg-primary text-white antialiased">
         <StoreProvider>
           <Providers>
             <Header />
