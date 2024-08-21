@@ -203,14 +203,12 @@ export default function Quiz({ params }: { params: { type: string } }) {
                 </div>
               </div>
 
-              <div>
-                <Button
-                  className="bg-white text-primary hover:bg-white"
-                  onClick={() => window.location.reload()}
-                >
-                  Coba Lagi
-                </Button>
-              </div>
+              <Button
+                onClick={() => window.location.reload()}
+                className="bg-none border md:hover:bg-white md:hover:text-primary"
+              >
+                Coba Lagi
+              </Button>
             </CardDescription>
           </CardHeader>
         </Card>
