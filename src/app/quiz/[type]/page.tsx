@@ -190,14 +190,32 @@ export default function Quiz({ params }: { params: { type: string } }) {
     return word.charAt(0).toUpperCase() + word.slice(1);
   };
 
+  // Round Up Score
+  function roundUp(number: number) {
+    const stringNumber = number.toString();
+    const decimalIndex = stringNumber.indexOf(".");
+    if (decimalIndex === -1) {
+      return number;
+    }
+    const lastTwoDigits = stringNumber.substring(
+      decimalIndex + 1,
+      decimalIndex + 3
+    );
+    const roundedLastTwoDigits = Math.ceil(parseFloat(lastTwoDigits));
+    return parseFloat(
+      stringNumber.substring(0, decimalIndex) + "." + roundedLastTwoDigits
+    );
+  }
+
   // Calculate Score
   const correctAnswersCount = userAnswers.filter(
     (answer) => answer.userAnswer === answer.correctAnswer
   ).length;
 
   const incorrectAnswersCount = userAnswers.length - correctAnswersCount;
-  const score =
-    (correctAnswersCount / (correctAnswersCount + incorrectAnswersCount)) * 100;
+  const score = roundUp(
+    (correctAnswersCount / (correctAnswersCount + incorrectAnswersCount)) * 100
+  );
 
   // Current Question
   const question = reorderedQuestions[currentQuestionIndex];
