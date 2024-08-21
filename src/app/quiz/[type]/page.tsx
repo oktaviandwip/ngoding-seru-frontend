@@ -202,9 +202,10 @@ export default function Quiz({ params }: { params: { type: string } }) {
       decimalIndex + 3
     );
     const roundedLastTwoDigits = Math.ceil(parseFloat(lastTwoDigits));
-    return parseFloat(
+    const result = parseFloat(
       stringNumber.substring(0, decimalIndex) + "." + roundedLastTwoDigits
     );
+    return result;
   }
 
   // Calculate Score
@@ -213,9 +214,14 @@ export default function Quiz({ params }: { params: { type: string } }) {
   ).length;
 
   const incorrectAnswersCount = userAnswers.length - correctAnswersCount;
-  const score = roundUp(
-    (correctAnswersCount / (correctAnswersCount + incorrectAnswersCount)) * 100
-  );
+  const score =
+    correctAnswersCount + incorrectAnswersCount === 0
+      ? 0
+      : roundUp(
+          (correctAnswersCount /
+            (correctAnswersCount + incorrectAnswersCount)) *
+            100
+        );
 
   // Current Question
   const question = reorderedQuestions[currentQuestionIndex];
@@ -227,7 +233,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
 
   if (quizFinished) {
     return (
-      <div className="max-h-[80vh] overflow-auto space-y-4 pb-10">
+      <div className="max-h-[85vh] overflow-auto space-y-4">
         <Card className="bg-primary text-white">
           <CardHeader>
             <CardTitle>Quiz Finished</CardTitle>
@@ -299,11 +305,11 @@ export default function Quiz({ params }: { params: { type: string } }) {
   return (
     <div className="space-y-4 mb-10">
       {/* Time Bar */}
-      <div
-        className={`relative top-[35px] bg-white h-[19px] rounded-full`}
-        style={{ width: `${(timer / 60) * 100}%` }}
-      />
       <div className="relative w-full h-5 border-[2px] rounded-full">
+        <div
+          className={`bg-white h-[19px] rounded-full`}
+          style={{ width: `${(timer / 60) * 100}%` }}
+        />
         {timerAdjustment !== null && (
           <div
             className={`${
