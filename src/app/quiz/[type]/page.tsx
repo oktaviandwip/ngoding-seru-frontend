@@ -73,9 +73,8 @@ export default function Quiz({ params }: { params: { type: string } }) {
       setData(quizData.data);
       setNumbers(quizData.numbers);
     };
-
     fetchData();
-    removeLoadingScreen();
+    setIsLoading(true);
   }, [params.type]);
 
   // Start Timer
@@ -182,11 +181,6 @@ export default function Quiz({ params }: { params: { type: string } }) {
   // Current Question
   const question = reorderedQuestions[currentQuestionIndex];
 
-  // Render Loading Screen
-  if (isLoading) {
-    return <Loading />;
-  }
-
   if (quizFinished) {
     return (
       <div className="max-h-[80vh] overflow-auto space-y-4 pb-10">
@@ -256,7 +250,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
   }
 
   if (!question) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (
