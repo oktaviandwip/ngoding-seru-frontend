@@ -38,6 +38,7 @@ async function getQuestions(type: string) {
 }
 
 type UserAnswer = {
+  image: string;
   questionIndex: number;
   question: string;
   userAnswer: string;
@@ -148,6 +149,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
     setUserAnswers((prev) => [
       ...prev,
       {
+        image: currentQuestion.Image,
         questionIndex: currentQuestionIndex,
         question: currentQuestion.Question,
         userAnswer: `(${selectedOption}) ${
@@ -187,7 +189,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
   if (quizFinished) {
     return (
       <div className="max-h-[80vh] overflow-auto space-y-4 pb-10">
-        <Card>
+        <Card className="bg-primary text-white">
           <CardHeader>
             <CardTitle>Quiz Finished</CardTitle>
             <CardDescription className="font-cofo-medium">
@@ -202,8 +204,15 @@ export default function Quiz({ params }: { params: { type: string } }) {
         </Card>
 
         {userAnswers.map((answer, index) => (
-          <Card key={index}>
+          <Card key={index} className="bg-primary text-white">
             <CardHeader>
+              <Image
+                src={answer.image}
+                alt={`Question Image ${index}`}
+                width={250}
+                height={250}
+                className="mb-4"
+              />
               <CardTitle>
                 Question {answer.questionIndex + 1}: {answer.question}
               </CardTitle>

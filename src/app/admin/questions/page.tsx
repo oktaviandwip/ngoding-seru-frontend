@@ -136,6 +136,7 @@ export default function UserProfileForm() {
       formData.append("option_b", values.option_b);
       formData.append("option_c", values.option_c);
       formData.append("option_d", values.option_d);
+      formData.append("explanation", values.explanation);
       formData.append("answer", values.answer);
 
       if (values.image) {
@@ -194,7 +195,10 @@ export default function UserProfileForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mb-10">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-4 mb-10 text-primary"
+      >
         <div className="flex flex-col w-full space-y-2">
           <div className="relative group cursor-pointer w-full min-h-24 flex items-center justify-center">
             <div className={`${selectedImage ? "flex" : "hidden"}`}>
@@ -220,7 +224,7 @@ export default function UserProfileForm() {
                 height={30}
                 quality={100}
               />
-              <div>Add photo</div>
+              <div className="text-white">Add photo</div>
             </div>
 
             <div
@@ -273,7 +277,7 @@ export default function UserProfileForm() {
                 name={v.name as keyof FormValues}
                 render={() => (
                   <FormItem className="w-1/2 md:w-32">
-                    <FormLabel>{v.label}</FormLabel>
+                    <FormLabel className="text-white">{v.label}</FormLabel>
                     <FormControl>
                       <Select
                         onValueChange={(value) =>
@@ -310,7 +314,7 @@ export default function UserProfileForm() {
               name={name as keyof FormValues}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{label}</FormLabel>
+                  <FormLabel className="text-white">{label}</FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder={label}
@@ -329,7 +333,7 @@ export default function UserProfileForm() {
             name="answer"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Answer</FormLabel>
+                <FormLabel className="text-white">Answer</FormLabel>
                 <FormControl>
                   <RadioGroup
                     className="flex space-x-4"
@@ -341,9 +345,9 @@ export default function UserProfileForm() {
                         <RadioGroupItem
                           value={v}
                           id={v}
-                          className="mt-2 mr-1"
+                          className="mt-2 mr-1 bg-white"
                         />
-                        <FormLabel htmlFor={v}>
+                        <FormLabel htmlFor={v} className="text-white">
                           {capitalizeFirstLetter(v)}
                         </FormLabel>
                       </FormItem>
