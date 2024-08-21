@@ -194,7 +194,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
             <CardTitle>Quiz Finished</CardTitle>
             <CardDescription className="font-cofo-medium">
               <div className="text-green-500">
-                Correct:{correctAnswersCount}
+                Correct: {correctAnswersCount}
               </div>
               <div className="text-red-500">
                 Incorrect: {incorrectAnswersCount}
