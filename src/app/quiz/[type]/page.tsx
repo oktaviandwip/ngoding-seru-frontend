@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import Image from "next/image";
 import Loading from "@/components/Loading";
+import { Button } from "@/components/ui/button";
 
 interface Question {
   Image: string;
@@ -192,12 +193,18 @@ export default function Quiz({ params }: { params: { type: string } }) {
         <Card className="bg-primary text-white">
           <CardHeader>
             <CardTitle>Quiz Finished</CardTitle>
-            <CardDescription className="font-cofo-medium">
-              <div className="text-success font-semibold">
-                Correct: {correctAnswersCount}
+            <CardDescription className="flex justify-between">
+              <div className="font-semibold">
+                <div className="text-success">
+                  Correct: {correctAnswersCount}
+                </div>
+                <div className="text-error">
+                  Incorrect: {incorrectAnswersCount}
+                </div>
               </div>
-              <div className="text-error font-semibold">
-                Incorrect: {incorrectAnswersCount}
+
+              <div>
+                <Button className="bg-white text-primary">Coba Lagi</Button>
               </div>
             </CardDescription>
           </CardHeader>
@@ -222,7 +229,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
                   answer.userAnswer === answer.correctAnswer
                     ? "text-success font-semibold"
                     : "text-error font-semibold"
-                }  font-cofo-medium`}
+                }`}
               >
                 Your Answer: {answer.userAnswer}
               </CardDescription>
