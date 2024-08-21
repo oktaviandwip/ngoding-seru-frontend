@@ -193,10 +193,8 @@ export default function Quiz({ params }: { params: { type: string } }) {
           <CardHeader>
             <CardTitle>Quiz Finished</CardTitle>
             <CardDescription className="font-cofo-medium">
-              <div className="text-green-500">
-                Correct: {correctAnswersCount}
-              </div>
-              <div className="text-red-500">
+              <div className="text-success">Correct: {correctAnswersCount}</div>
+              <div className="text-error">
                 Incorrect: {incorrectAnswersCount}
               </div>
             </CardDescription>
@@ -220,8 +218,8 @@ export default function Quiz({ params }: { params: { type: string } }) {
               <CardDescription
                 className={`${
                   answer.userAnswer === answer.correctAnswer
-                    ? "text-green-500"
-                    : "text-red-500"
+                    ? "text-success"
+                    : "text-error"
                 }  font-cofo-medium`}
               >
                 Your Answer: {answer.userAnswer}
@@ -256,7 +254,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
         {timerAdjustment !== null && (
           <div
             className={`${
-              timerAdjustment > 0 ? "text-green-500" : "text-red-500"
+              timerAdjustment > 0 ? "text-success" : "text-error"
             } font-bold absolute`}
             style={{
               left: `${(timer / 60) * 100}%`,
@@ -269,8 +267,8 @@ export default function Quiz({ params }: { params: { type: string } }) {
         )}
       </div>
       <div
-        className={`font-bold ${
-          question.Level === "easy" ? "text-green-500" : "text-yellow-500"
+        className={`font-bold tracking-widest ${
+          question.Level === "easy" ? "text-success" : "text-yellow-500"
         }`}
       >
         {capitalizeFirstLetter(question.Level)}
@@ -297,8 +295,8 @@ export default function Quiz({ params }: { params: { type: string } }) {
             className={`${
               selectedOption === v
                 ? isCorrectAnswer === true
-                  ? "bg-green-500 hover:bg-green-500 text-white"
-                  : "bg-red-500 hover:bg-red-500 text-white"
+                  ? "bg-success hover:bg-bg-success text-white"
+                  : "bg-error hover:bg-error text-white"
                 : "bg-primary text-white border md:hover:bg-white md:hover:text-primary"
             } flex items-center justify-center text-center rounded-lg p-2 text-sm cursor-pointer`}
             onClick={() => handleAnswer(v)}

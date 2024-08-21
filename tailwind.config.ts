@@ -27,8 +27,11 @@ const config = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        black: {
-          DEFAULT: "hsl(var(--black))",
+        success: {
+          DEFAULT: "hsl(var(--success))",
+        },
+        error: {
+          DEFAULT: "hsl(var(--error))",
         },
         primary: {
           DEFAULT: "hsl(var(--primary))",
@@ -58,7 +61,6 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        success: "#0072F5"
       },
       borderRadius: {
         lg: "var(--radius)",
