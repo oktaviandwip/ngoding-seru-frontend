@@ -193,8 +193,10 @@ export default function Quiz({ params }: { params: { type: string } }) {
           <CardHeader>
             <CardTitle>Quiz Finished</CardTitle>
             <CardDescription className="font-cofo-medium">
-              <div className="text-success">Correct: {correctAnswersCount}</div>
-              <div className="text-error">
+              <div className="text-success font-semibold">
+                Correct: {correctAnswersCount}
+              </div>
+              <div className="text-error font-semibold">
                 Incorrect: {incorrectAnswersCount}
               </div>
             </CardDescription>
@@ -218,8 +220,8 @@ export default function Quiz({ params }: { params: { type: string } }) {
               <CardDescription
                 className={`${
                   answer.userAnswer === answer.correctAnswer
-                    ? "text-success"
-                    : "text-error"
+                    ? "text-success font-semibold"
+                    : "text-error font-semibold"
                 }  font-cofo-medium`}
               >
                 Your Answer: {answer.userAnswer}
