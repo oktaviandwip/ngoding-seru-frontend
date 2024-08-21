@@ -228,7 +228,9 @@ export default function Quiz({ params }: { params: { type: string } }) {
               </CardDescription>
               <CardDescription
                 className={`${
-                  answer.userAnswer === answer.correctAnswer ? "hidden" : "flex"
+                  answer.userAnswer === answer.correctAnswer
+                    ? "hidden"
+                    : "flex font-semibold"
                 }`}
               >
                 Correct Answer: {answer.correctAnswer}
