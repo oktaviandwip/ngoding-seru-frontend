@@ -299,8 +299,8 @@ export default function Quiz({ params }: { params: { type: string } }) {
                 ? isCorrectAnswer === true
                   ? "bg-green-500 hover:bg-green-500 text-white"
                   : "bg-red-500 hover:bg-red-500 text-white"
-                : "bg-secondary text-primary hover:bg-secondary"
-            } flex items-center justify-center text-center rounded-lg p-2 text-sm`}
+                : "bg-primary text-white border hover:bg-white hover:text-primary"
+            } flex items-center justify-center text-center rounded-lg p-2 text-sm cursor-pointer`}
             onClick={() => handleAnswer(v)}
           >
             <div className="flex">
