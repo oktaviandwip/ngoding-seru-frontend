@@ -204,7 +204,12 @@ export default function Quiz({ params }: { params: { type: string } }) {
               </div>
 
               <div>
-                <Button className="bg-white text-primary">Coba Lagi</Button>
+                <Button
+                  className="bg-white text-primary"
+                  onClick={() => window.location.reload()}
+                >
+                  Coba Lagi
+                </Button>
               </div>
             </CardDescription>
           </CardHeader>
