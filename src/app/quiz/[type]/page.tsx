@@ -80,6 +80,8 @@ export default function Quiz({ params }: { params: { type: string } }) {
 
   // Start Timer
   useEffect(() => {
+    let startTime = Date.now();
+
     const id = setInterval(() => {
       setTimer((prevTime) => {
         if (prevTime <= 0) {
@@ -92,8 +94,24 @@ export default function Quiz({ params }: { params: { type: string } }) {
         return prevTime - 0.004;
       });
     }, 1);
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        startTime = Date.now();
+      } else {
+        const elapsedTime = (Date.now() - startTime) / 1000;
+        setTimer((prevTime) => Math.max(prevTime - elapsedTime, 0));
+        startTime = Date.now();
+      }
+    };
+
     setTimerId(id);
-    return () => clearInterval(id);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      clearInterval(id);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
   }, []);
 
   // Reordered Questions
