@@ -33,6 +33,9 @@ const config = {
         error: {
           DEFAULT: "hsl(var(--error))",
         },
+        blue: {
+          DEFAULT: "hsl(var(--blue))",
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
