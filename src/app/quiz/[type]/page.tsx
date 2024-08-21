@@ -239,7 +239,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
                 <div className="text-error">
                   Incorrect: {incorrectAnswersCount}
                 </div>
-                <div className="text-yellow-500">Score: {score}/100</div>
+                <div className="text-blue">Score: {score}/100</div>
               </div>
 
               <Button
