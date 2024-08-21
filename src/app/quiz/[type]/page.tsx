@@ -309,8 +309,8 @@ export default function Quiz({ params }: { params: { type: string } }) {
             className={`${
               selectedOption === v
                 ? isCorrectAnswer === true
-                  ? "bg-success hover:bg-bg-success text-white"
-                  : "bg-error hover:bg-error text-white"
+                  ? "bg-white border-success hover:bg-success text-white"
+                  : "bg-white border-error hover:bg-error text-white"
                 : "bg-primary text-white border md:hover:bg-white md:hover:text-primary"
             } flex items-center justify-center text-center rounded-lg p-2 text-sm cursor-pointer`}
             onClick={() => handleAnswer(v)}
