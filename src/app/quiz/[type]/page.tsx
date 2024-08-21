@@ -84,7 +84,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
 
     const id = setInterval(() => {
       setTimer((prevTime) => {
-        if (prevTime <= 0) {
+        if (prevTime <= 1) {
           clearInterval(id);
           setIsLoading(true);
           removeLoadingScreen();
@@ -282,7 +282,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
         className={`relative top-[35px] bg-white h-[19px] rounded-full`}
         style={{ width: `${(timer / 60) * 100}%` }}
       />
-      <div className="w-full h-5 border-[2px] rounded-full">
+      <div className="relative w-full h-5 border-[2px] rounded-full">
         {timerAdjustment !== null && (
           <div
             className={`${
