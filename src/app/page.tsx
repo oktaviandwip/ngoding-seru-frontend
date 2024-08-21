@@ -44,7 +44,6 @@ export default function Home() {
               alt={v.alt}
               width={100}
               height={100}
-              className="bg-white p-1 rounded-sm"
               onClick={() => router.push(`/quiz/${v.link}`)}
             />
           ))}
@@ -62,7 +61,6 @@ export default function Home() {
               alt={v.alt}
               width={100}
               height={100}
-              className="bg-white p-1 rounded-sm"
               onClick={() => router.push(`/quiz/${v.link}`)}
             />
           ))}

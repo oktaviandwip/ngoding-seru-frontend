@@ -206,13 +206,14 @@ export default function Quiz({ params }: { params: { type: string } }) {
         {userAnswers.map((answer, index) => (
           <Card key={index} className="bg-primary text-white">
             <CardHeader>
-              <Image
-                src={answer.image}
-                alt={`Question Image ${index}`}
-                width={250}
-                height={250}
-                className="mb-4"
-              />
+              <div className={`${answer.image ? "flex" : "hidden"} mb-4`}>
+                <Image
+                  src={answer.image}
+                  alt={`Question Image ${index}`}
+                  width={250}
+                  height={250}
+                />
+              </div>
               <CardTitle>
                 Question {answer.questionIndex + 1}: {answer.question}
               </CardTitle>
