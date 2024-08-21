@@ -84,7 +84,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
 
     const id = setInterval(() => {
       setTimer((prevTime) => {
-        if (prevTime <= 1) {
+        if (prevTime <= 0.5) {
           clearInterval(id);
           setIsLoading(true);
           removeLoadingScreen();
@@ -196,6 +196,8 @@ export default function Quiz({ params }: { params: { type: string } }) {
   ).length;
 
   const incorrectAnswersCount = userAnswers.length - correctAnswersCount;
+  const score =
+    (correctAnswersCount / (correctAnswersCount + incorrectAnswersCount)) * 100;
 
   // Current Question
   const question = reorderedQuestions[currentQuestionIndex];
@@ -219,6 +221,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
                 <div className="text-error">
                   Incorrect: {incorrectAnswersCount}
                 </div>
+                <div className="text-yellow-500">Score: {score}/100</div>
               </div>
 
               <Button
