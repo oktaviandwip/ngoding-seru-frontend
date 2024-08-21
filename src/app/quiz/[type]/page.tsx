@@ -82,7 +82,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
   useEffect(() => {
     const id = setInterval(() => {
       setTimer((prevTime) => {
-        if (prevTime <= 0) {
+        if (prevTime <= 0.3) {
           clearInterval(id);
           setIsLoading(true);
           removeLoadingScreen();
@@ -262,11 +262,11 @@ export default function Quiz({ params }: { params: { type: string } }) {
   return (
     <div className="space-y-4 mb-10">
       {/* Time Bar */}
-      <div className="relative w-full h-5 border-[2px] rounded-full">
-        <div
-          className={`bg-white h-[17px] rounded-full`}
-          style={{ width: `${(timer / 60) * 100}%` }}
-        />
+      <div
+        className={`relative top-[34px] bg-white h-[17px] rounded-full z-0`}
+        style={{ width: `${(timer / 60) * 100}%` }}
+      />
+      <div className="relative w-full h-5 border-[2px] rounded-full z-40">
         {timerAdjustment !== null && (
           <div
             className={`${
