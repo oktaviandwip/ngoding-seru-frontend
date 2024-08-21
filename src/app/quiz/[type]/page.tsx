@@ -75,6 +75,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
     };
     fetchData();
     setIsLoading(true);
+    removeLoadingScreen();
   }, [params.type]);
 
   // Start Timer
@@ -180,6 +181,11 @@ export default function Quiz({ params }: { params: { type: string } }) {
 
   // Current Question
   const question = reorderedQuestions[currentQuestionIndex];
+
+  // Render Loading Screen
+  if (isLoading) {
+    return <Loading />;
+  }
 
   if (quizFinished) {
     return (
