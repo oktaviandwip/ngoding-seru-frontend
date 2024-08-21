@@ -205,7 +205,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
 
               <div>
                 <Button
-                  className="bg-white text-primary"
+                  className="bg-white text-primary hover:bg-white"
                   onClick={() => window.location.reload()}
                 >
                   Coba Lagi
