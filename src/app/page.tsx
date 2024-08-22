@@ -33,7 +33,7 @@ export default function Home() {
   return (
     <main className="space-y-12">
       <div className="space-y-6">
-        <h1 className="flex justify-center md:justify-start text-[#689755]">
+        <h1 className="flex justify-center md:justify-start text-comment">
           {"/* frontend */"}
         </h1>
         <div className="grid grid-cols-3 md:grid-cols-6 gap-6">
@@ -50,7 +50,7 @@ export default function Home() {
         </div>
       </div>
       <div className="space-y-6">
-        <h1 className="flex justify-center md:justify-start text-[#689755]">
+        <h1 className="flex justify-center md:justify-start text-comment">
           {"/* backend */"}
         </h1>
         <div className="grid grid-cols-3 md:grid-cols-6 gap-6">

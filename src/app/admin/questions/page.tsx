@@ -36,7 +36,7 @@ const formSchema = z.object({
       z
         .instanceof(File)
         .refine(
-          (file) => file.size <= 5 * 1024 * 1024,
+          (file) => file.size <= 1 * 1024 * 1024,
           "Each file must be less than 5MB"
         )
         .refine(

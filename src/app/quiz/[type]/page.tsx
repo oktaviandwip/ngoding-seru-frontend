@@ -265,8 +265,8 @@ export default function Quiz({ params }: { params: { type: string } }) {
                 <Image
                   src={answer.image}
                   alt={`Question Image ${index}`}
-                  width={250}
-                  height={250}
+                  width={400}
+                  height={400}
                 />
               </div>
               <CardTitle>
@@ -340,8 +340,8 @@ export default function Quiz({ params }: { params: { type: string } }) {
         <Image
           src={question.Image}
           alt="Image question"
-          width={300}
-          height={300}
+          width={400}
+          height={400}
           quality={100}
           className="rounded-sm"
         />
