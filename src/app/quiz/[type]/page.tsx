@@ -250,7 +250,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
 
               <Button
                 onClick={() => window.location.reload()}
-                className="bg-none border md:hover:bg-white md:hover:text-primary"
+                className="font-bold bg-none border md:hover:bg-white md:hover:text-primary"
               >
                 Coba Lagi
               </Button>
