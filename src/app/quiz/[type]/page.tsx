@@ -245,7 +245,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
                 <div className="text-error">
                   Incorrect: {incorrectAnswersCount}
                 </div>
-                <div className="text-blue">Score: {score}/100</div>
+                <div className="text-yellow">Score: {score}/100</div>
               </div>
 
               <Button
@@ -285,7 +285,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
                 className={`${
                   answer.userAnswer === answer.correctAnswer
                     ? "hidden"
-                    : "flex font-semibold text-blue"
+                    : "flex font-semibold text-yellow"
                 }`}
               >
                 Correct Answer: {answer.correctAnswer}
@@ -327,7 +327,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
       </div>
       <div
         className={`font-bold tracking-widest ${
-          question.Level === "easy" ? "text-success" : "text-yellow-500"
+          question.Level === "easy" ? "text-success" : "text-yellow"
         }`}
       >
         {capitalizeFirstLetter(question.Level)}
