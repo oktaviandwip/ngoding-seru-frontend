@@ -269,7 +269,9 @@ export default function Quiz({ params }: { params: { type: string } }) {
                   height={400}
                 />
               </div>
-              <CardTitle>{answer.question}</CardTitle>
+              <CardTitle>
+                Question {answer.questionIndex + 1}: {answer.question}
+              </CardTitle>
               <CardDescription
                 className={`${
                   answer.userAnswer === answer.correctAnswer
