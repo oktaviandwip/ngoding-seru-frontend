@@ -42,7 +42,7 @@ export default function Home() {
           {frontendList.map((v) => (
             <Card
               key={v.alt}
-              className="flex items-center justify-between bg-primary text-white p-2"
+              className="flex items-center justify-between bg-primary text-white px-4 py-2 md:p-2"
               onClick={() => router.push(`/quiz/${v.link}`)}
             >
               <div className="flex items-center font-bold tracking-widest space-x-4">
@@ -64,7 +64,7 @@ export default function Home() {
           {backendList.map((v) => (
             <Card
               key={v.alt}
-              className="flex items-center justify-between bg-primary text-white p-2"
+              className="flex items-center justify-between bg-primary text-white px-4 py-2 md:p-2"
               onClick={() => router.push(`/quiz/${v.link}`)}
             >
               <div className="flex items-center font-bold tracking-widest space-x-4">
