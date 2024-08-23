@@ -10,6 +10,7 @@ import go from "@/assets/go.svg";
 import nodejs from "@/assets/nodejs.svg";
 import postgresql from "@/assets/postgresql.svg";
 import mysql from "@/assets/mysql.svg";
+import mongodb from "@/assets/mongodb.svg";
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { Icon } from "@iconify/react";
@@ -28,6 +29,7 @@ const backendList = [
   { image: go, alt: "Go", link: "/go" },
   { image: postgresql, alt: "Postgresql", link: "/postgresql" },
   { image: mysql, alt: "Mysql", link: "/mysql" },
+  { image: mongodb, alt: "MongoDB", link: "/mongodb" },
 ];
 
 export default function Home() {
@@ -80,7 +82,7 @@ export default function Home() {
           {backendList.map((v) => (
             <Card
               key={v.alt}
-              className="group flex items-center justify-between bg-primary text-white px-4 py-2 hover:bg-white hover:text-primary"
+              className="group flex items-center justify-between bg-primary text-white px-4 py-2 hover:bg-white hover:text-primary -mt-2"
               onClick={() => router.push(`/quiz/${v.link}`)}
             >
               <div className="flex items-center font-bold tracking-widest space-x-4">
