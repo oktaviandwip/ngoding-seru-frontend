@@ -50,7 +50,7 @@ export default function Home() {
                 <p>{v.alt}</p>
               </div>
               <div className="rounded-full border p-1">
-                <Icon icon="mage:chevron-down" />
+                <Icon icon="mage:chevron-right" />
               </div>
             </Card>
           ))}
@@ -72,7 +72,7 @@ export default function Home() {
                 <p>{v.alt}</p>
               </div>
               <div className="rounded-full border p-1">
-                <Icon icon="mage:chevron-down" />
+                <Icon icon="mage:chevron-right" />
               </div>
             </Card>
           ))}
