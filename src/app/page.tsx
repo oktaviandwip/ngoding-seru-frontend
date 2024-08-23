@@ -35,21 +35,18 @@ export default function Home() {
   return (
     <main className="space-y-12 mb-10">
       <div className="space-y-6">
-        <h1 className="flex justify-center md:justify-start text-comment">
-          {"/* frontend */"}
-        </h1>
         <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
           {frontendList.map((v) => (
             <Card
               key={v.alt}
-              className="flex items-center justify-between bg-primary text-white px-4 py-2 md:p-2"
+              className="group flex items-center justify-between bg-primary text-white px-4 py-2 hover:bg-white hover:text-primary"
               onClick={() => router.push(`/quiz/${v.link}`)}
             >
               <div className="flex items-center font-bold tracking-widest space-x-4">
                 <Image src={v.image} alt={v.alt} width={50} height={50} />
                 <p>{v.alt}</p>
               </div>
-              <div className="rounded-full border p-1">
+              <div className="rounded-full border p-1 md:group-hover:border-primary">
                 <Icon icon="mage:chevron-right" />
               </div>
             </Card>
@@ -57,21 +54,18 @@ export default function Home() {
         </div>
       </div>
       <div className="space-y-6">
-        <h1 className="flex justify-center md:justify-start text-comment">
-          {"/* backend */"}
-        </h1>
         <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
           {backendList.map((v) => (
             <Card
               key={v.alt}
-              className="flex items-center justify-between bg-primary text-white px-4 py-2 md:p-2"
+              className="group flex items-center justify-between bg-primary text-white px-4 py-2 hover:bg-white hover:text-primary"
               onClick={() => router.push(`/quiz/${v.link}`)}
             >
               <div className="flex items-center font-bold tracking-widest space-x-4">
                 <Image src={v.image} alt={v.alt} width={50} height={50} />
                 <p>{v.alt}</p>
               </div>
-              <div className="rounded-full border p-1">
+              <div className="rounded-full border p-1 md:group-hover:border-primary">
                 <Icon icon="mage:chevron-right" />
               </div>
             </Card>
