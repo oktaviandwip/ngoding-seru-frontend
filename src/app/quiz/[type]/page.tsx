@@ -233,7 +233,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
 
   if (quizFinished) {
     return (
-      <div className="max-h-[85vh] overflow-auto space-y-4">
+      <div className="max-h-[85vh] overflow-auto space-y-4 mb-10">
         <Card className="bg-primary text-white">
           <CardHeader>
             <CardTitle>Quiz Finished</CardTitle>

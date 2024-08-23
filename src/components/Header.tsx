@@ -45,7 +45,7 @@ export default function Header() {
   const navItems = pathname.startsWith("/admin") ? navAdmin : navUser;
 
   return (
-    <header className="fixed inset-x-0 flex items-center h-20 z-50 bg-primary border-b-[1px]">
+    <header className="relative inset-x-0 flex items-center h-20 z-50 bg-primary border-b-[1px]">
       <div className="container flex justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center space-x-4">
