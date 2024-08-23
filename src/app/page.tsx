@@ -47,7 +47,7 @@ export default function Home() {
                 <Image src={v.image} alt={v.alt} width={50} height={50} />
                 <p>{v.alt}</p>
               </div>
-              <div className="rounded-full border p-1 md:group-hover:border-primary">
+              <div className="rounded-full border p-1 group-hover:border-primary">
                 <Icon icon="mage:chevron-right" />
               </div>
             </Card>
@@ -67,7 +67,7 @@ export default function Home() {
                 <Image src={v.image} alt={v.alt} width={50} height={50} />
                 <p>{v.alt}</p>
               </div>
-              <div className="rounded-full border p-1 md:group-hover:border-primary">
+              <div className="rounded-full border p-1 group-hover:border-primary">
                 <Icon icon="mage:chevron-right" />
               </div>
             </Card>
