@@ -12,6 +12,7 @@ import postgresql from "@/assets/postgresql.svg";
 import mysql from "@/assets/mysql.svg";
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
+import { Icon } from "@iconify/react";
 
 const frontendList = [
   { image: javascript, alt: "Javascript", link: "/javascript" },
@@ -37,15 +38,20 @@ export default function Home() {
         <h1 className="flex justify-center md:justify-start text-comment">
           {"/* frontend */"}
         </h1>
-        <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
           {frontendList.map((v) => (
             <Card
               key={v.alt}
-              className="flex items-center justify-center space-x-4 bg-primary text-white font-bold tracking-widest p-2"
+              className="flex items-center justify-between bg-primary text-white p-2"
               onClick={() => router.push(`/quiz/${v.link}`)}
             >
-              <Image src={v.image} alt={v.alt} width={50} height={50} />
-              <p>{v.alt}</p>
+              <div className="flex items-center font-bold tracking-widest space-x-4">
+                <Image src={v.image} alt={v.alt} width={50} height={50} />
+                <p>{v.alt}</p>
+              </div>
+              <div className="rounded-full border p-1">
+                <Icon icon="mage:chevron-down" />
+              </div>
             </Card>
           ))}
         </div>
@@ -54,15 +60,20 @@ export default function Home() {
         <h1 className="flex justify-center md:justify-start text-comment">
           {"/* backend */"}
         </h1>
-        <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
           {backendList.map((v) => (
             <Card
               key={v.alt}
-              className="flex items-center justify-center space-x-4 bg-primary text-white font-bold tracking-widest p-2"
+              className="flex items-center justify-between bg-primary text-white p-2"
               onClick={() => router.push(`/quiz/${v.link}`)}
             >
-              <Image src={v.image} alt={v.alt} width={50} height={50} />
-              <p>{v.alt}</p>
+              <div className="flex items-center font-bold tracking-widest space-x-4">
+                <Image src={v.image} alt={v.alt} width={50} height={50} />
+                <p>{v.alt}</p>
+              </div>
+              <div className="rounded-full border p-1">
+                <Icon icon="mage:chevron-down" />
+              </div>
             </Card>
           ))}
         </div>
