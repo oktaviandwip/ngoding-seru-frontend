@@ -35,6 +35,7 @@ export default function Home() {
   return (
     <main className="space-y-12 mb-10">
       <div className="space-y-6">
+        <h1 className="flex justify-center md:justify-start">Frontend</h1>
         <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
           {frontendList.map((v) => (
             <Card
@@ -54,6 +55,7 @@ export default function Home() {
         </div>
       </div>
       <div className="space-y-6">
+        <h1 className="flex justify-center md:justify-start">Backend</h1>
         <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
           {backendList.map((v) => (
             <Card
