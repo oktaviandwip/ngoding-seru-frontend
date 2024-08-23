@@ -33,7 +33,7 @@ export default function Home() {
   const router = useRouter();
 
   return (
-    <main className="space-y-12">
+    <main className="space-y-12 mb-10">
       <div className="space-y-6">
         <h1 className="flex justify-center md:justify-start text-comment">
           {"/* frontend */"}
