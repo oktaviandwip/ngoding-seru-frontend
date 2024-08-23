@@ -39,16 +39,16 @@ export default function Home() {
         defaultValue="frontend"
         className="flex flex-col items-center md:items-start space-y-6"
       >
-        <TabsList className="grid w-full md:w-60 grid-cols-2 bg-primary border pt-2 pb-10 px-2">
+        <TabsList className="grid w-full md:w-60 grid-cols-2 bg-primary border pt-2 pb-11 px-2">
           <TabsTrigger
             value="frontend"
-            className="font-bold tracking-widest text-white"
+            className="font-bold tracking-widest text-white text-base"
           >
             frontend
           </TabsTrigger>
           <TabsTrigger
             value="backend"
-            className="font-bold tracking-widest text-white"
+            className="font-bold tracking-widest text-white text-base"
           >
             backend
           </TabsTrigger>
