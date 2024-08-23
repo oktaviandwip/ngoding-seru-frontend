@@ -53,43 +53,45 @@ export default function Home() {
             backend
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="frontend">
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-            {frontendList.map((v) => (
-              <Card
-                key={v.alt}
-                className="group flex items-center justify-between bg-primary text-white px-4 py-2 hover:bg-white hover:text-primary"
-                onClick={() => router.push(`/quiz/${v.link}`)}
-              >
-                <div className="flex items-center font-bold tracking-widest space-x-4">
-                  <Image src={v.image} alt={v.alt} width={50} height={50} />
-                  <p>{v.alt}</p>
-                </div>
-                <div className="rounded-full border p-1 group-hover:border-primary">
-                  <Icon icon="mage:chevron-right" />
-                </div>
-              </Card>
-            ))}
-          </div>
+        <TabsContent
+          value="frontend"
+          className="w-full grid grid-cols-1 md:grid-cols-5 gap-6"
+        >
+          {frontendList.map((v) => (
+            <Card
+              key={v.alt}
+              className="group flex items-center justify-between bg-primary text-white px-4 py-2 hover:bg-white hover:text-primary"
+              onClick={() => router.push(`/quiz/${v.link}`)}
+            >
+              <div className="flex items-center font-bold tracking-widest space-x-4">
+                <Image src={v.image} alt={v.alt} width={50} height={50} />
+                <p>{v.alt}</p>
+              </div>
+              <div className="rounded-full border p-1 group-hover:border-primary">
+                <Icon icon="mage:chevron-right" />
+              </div>
+            </Card>
+          ))}
         </TabsContent>
-        <TabsContent value="backend">
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-            {backendList.map((v) => (
-              <Card
-                key={v.alt}
-                className="group flex items-center justify-between bg-primary text-white px-4 py-2 hover:bg-white hover:text-primary"
-                onClick={() => router.push(`/quiz/${v.link}`)}
-              >
-                <div className="flex items-center font-bold tracking-widest space-x-4">
-                  <Image src={v.image} alt={v.alt} width={50} height={50} />
-                  <p>{v.alt}</p>
-                </div>
-                <div className="rounded-full border p-1 group-hover:border-primary">
-                  <Icon icon="mage:chevron-right" />
-                </div>
-              </Card>
-            ))}
-          </div>
+        <TabsContent
+          value="backend"
+          className="w-full grid grid-cols-1 md:grid-cols-5 gap-6"
+        >
+          {backendList.map((v) => (
+            <Card
+              key={v.alt}
+              className="group flex items-center justify-between bg-primary text-white px-4 py-2 hover:bg-white hover:text-primary"
+              onClick={() => router.push(`/quiz/${v.link}`)}
+            >
+              <div className="flex items-center font-bold tracking-widest space-x-4">
+                <Image src={v.image} alt={v.alt} width={50} height={50} />
+                <p>{v.alt}</p>
+              </div>
+              <div className="rounded-full border p-1 group-hover:border-primary">
+                <Icon icon="mage:chevron-right" />
+              </div>
+            </Card>
+          ))}
         </TabsContent>
       </Tabs>
     </main>
