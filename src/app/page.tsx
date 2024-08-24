@@ -22,7 +22,7 @@ const frontendList = [
   { image: typescript, alt: "Typescript", link: "/typescript" },
   { image: react, alt: "React", link: "/react" },
   { image: nextjs, alt: "Nextjs", link: "/nextjs" },
-  { image: tailwindcss, alt: "TailwindCSS", link: "/tailwindcss" },
+  { image: tailwindcss, alt: "Tailwind", link: "/tailwindcss" },
 ];
 
 const backendList = [
@@ -97,7 +97,7 @@ export default function Home() {
         </TabsList>
         <TabsContent
           value="frontend"
-          className="w-full grid grid-cols-1 md:grid-cols-4 xl:grid-cols-5 gap-6"
+          className="w-full grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 gap-6"
         >
           {frontendList.map((v) => (
             <Card
@@ -117,7 +117,7 @@ export default function Home() {
         </TabsContent>
         <TabsContent
           value="backend"
-          className="w-full grid grid-cols-1 md:grid-cols-4 xl:grid-cols-5 gap-8 md:gap-6"
+          className="w-full grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 gap-8 md:gap-6"
         >
           {backendList.map((v) => (
             <Card
