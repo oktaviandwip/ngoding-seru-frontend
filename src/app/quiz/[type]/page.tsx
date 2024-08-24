@@ -269,7 +269,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
                   height={400}
                 />
               </div>
-              <CardTitle>
+              <CardTitle className="text-lg">
                 Question {answer.questionIndex + 1}: {answer.question}
               </CardTitle>
               <CardDescription
