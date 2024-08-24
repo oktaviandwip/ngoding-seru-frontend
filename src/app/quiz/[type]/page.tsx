@@ -333,7 +333,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
           question.Level === "easy"
             ? "text-blue"
             : question.Level === "medium"
-            ? "text-yellow"
+            ? "text-purple"
             : "text-error"
         }`}
       >
