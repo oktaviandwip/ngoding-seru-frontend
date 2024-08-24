@@ -74,6 +74,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
       setNumbers(quizData.numbers);
     };
     fetchData();
+    removeLoadingScreen();
   }, [params.type]);
 
   // Start Timer
