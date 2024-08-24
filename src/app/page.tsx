@@ -46,7 +46,7 @@ export default function Home() {
         <div className="text-xl">Welcome, Oktavian</div>
         <div className="border w-[248px] h-36 rounded-xl">
           <div className="border-t-[1px] mt-12">
-            <div className="w-full grid grid-cols-2 justify-center text-center py-3">
+            <div className="w-full grid grid-cols-2 justify-center text-center font-bold py-3">
               <div className="border-r">
                 <p className="text-blue">Score</p>
                 <p>99.99</p>
