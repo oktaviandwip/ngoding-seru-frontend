@@ -313,7 +313,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
         {timerAdjustment !== null && (
           <div
             className={`${
-              timerAdjustment > 0 ? "text-success" : "text-error"
+              timerAdjustment > 0 ? "text-blue" : "text-error"
             } font-bold absolute`}
             style={{
               left: `${(timer / 60) * 100}%`,
@@ -328,7 +328,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
       <div
         className={`font-bold tracking-widest ${
           question.Level === "easy"
-            ? "text-success"
+            ? "text-blue"
             : question.Level === "medium"
             ? "text-yellow"
             : "text-error"
