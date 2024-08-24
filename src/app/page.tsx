@@ -44,7 +44,7 @@ export default function Home() {
     <main className="space-y-6 mb-10">
       <div className="relative w-full flex flex-col items-center space-y-14">
         <div className="text-xl">Welcome, Oktavian</div>
-        <div className="border w-[248px] h-36 rounded-xl">
+        <div className="border w-[248px] h-40 rounded-xl">
           <div className="border-t-[1px] mt-12">
             <div className="w-full grid grid-cols-2 justify-center text-center font-bold py-3">
               <div className="border-r">
@@ -63,6 +63,9 @@ export default function Home() {
                 </p>
               </div>
             </div>
+          </div>
+          <div className="flex justify-center rounded-full text-[10px] bg-primary border w-20 p-1 mt-2 ml-20">
+            Full Stats
           </div>
         </div>
         <Image
