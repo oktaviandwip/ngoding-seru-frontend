@@ -39,9 +39,9 @@ export default function Home() {
   return (
     <main className="space-y-6 mb-10">
       <div className="relative w-full flex flex-col items-center space-y-14">
-        <div>Welcome, Oktavian</div>
-        <div className="border w-[248px] h-36 rounded-xl">
-          <div className="border-t-[2px] mt-12">
+        <div className="text-xl">Welcome, Oktavian</div>
+        <div className="border w-full md:w-[248px] h-36 rounded-xl">
+          <div className="border-t-[1px] mt-12">
             <div className="w-full grid grid-cols-2 justify-center text-center py-3">
               <div className="border-r">
                 <p className="text-blue">Score</p>
@@ -71,7 +71,7 @@ export default function Home() {
 
       <Tabs
         defaultValue="frontend"
-        className="flex flex-col items-center md:items-start space-y-6"
+        className="flex flex-col items-center space-y-6"
       >
         <TabsList className="grid w-full md:w-[248px] grid-cols-2 bg-primary border pt-2 pb-11 px-2">
           <TabsTrigger
