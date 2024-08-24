@@ -40,7 +40,7 @@ export default function Home() {
     <main className="space-y-6 mb-10">
       <div className="relative w-full flex flex-col items-center space-y-14">
         <div className="text-xl">Welcome, Oktavian</div>
-        <div className="border w-full md:w-[248px] h-36 rounded-xl">
+        <div className="border w-[248px] h-36 rounded-xl">
           <div className="border-t-[1px] mt-12">
             <div className="w-full grid grid-cols-2 justify-center text-center py-3">
               <div className="border-r">
