@@ -43,7 +43,7 @@ export default function Home() {
   return (
     <main className="space-y-6 mb-10">
       <div className="relative w-full flex flex-col items-center space-y-14">
-        <div className="text-xl">Welcome, Oktavian</div>
+        <div className="text-xl">welcome, oktavian</div>
         <div className="border w-[248px] h-40 rounded-xl">
           <div className="border-t-[1px] mt-12">
             <div className="w-full grid grid-cols-2 justify-center text-center font-bold py-3">
