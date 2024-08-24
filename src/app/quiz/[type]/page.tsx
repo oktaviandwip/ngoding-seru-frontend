@@ -52,7 +52,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
   const [numbers, setNumbers] = useState<number[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [timer, setTimer] = useState(60);
-  const [timerId, setTimerId] = useState<NodeJS.Timeout | null>(null);
+  const [timerId, setTimerId] = useState<NodeJS.Timeout | undefined>(undefined);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState("");
   const [userAnswers, setUserAnswers] = useState<UserAnswer[]>([]);
@@ -81,19 +81,22 @@ export default function Quiz({ params }: { params: { type: string } }) {
   // Start Timer
   useEffect(() => {
     let startTime = Date.now();
+    let id: NodeJS.Timeout | undefined;
 
-    const id = setInterval(() => {
-      setTimer((prevTime) => {
-        if (prevTime <= 0.5) {
-          clearInterval(id);
-          setIsLoading(true);
-          removeLoadingScreen();
-          setQuizFinished(true);
-          return 0;
-        }
-        return prevTime - 0.004;
-      });
-    }, 1);
+    if (data) {
+      id = setInterval(() => {
+        setTimer((prevTime) => {
+          if (prevTime <= 0) {
+            clearInterval(id);
+            setIsLoading(true);
+            removeLoadingScreen();
+            setQuizFinished(true);
+            return 0;
+          }
+          return prevTime - 0.004;
+        });
+      }, 1);
+    }
 
     const handleVisibilityChange = () => {
       if (document.hidden) {
@@ -112,7 +115,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
       clearInterval(id);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, []);
+  }, [data]);
 
   // Reordered Questions
   let reorderedQuestions: Question[] = [];
@@ -305,9 +308,9 @@ export default function Quiz({ params }: { params: { type: string } }) {
   return (
     <div className="space-y-4 mb-10">
       {/* Time Bar */}
-      <div className="relative w-full h-5 border-[2px] rounded-full">
+      <div className="relative w-full h-5 border-[2px] rounded-full overflow-hidden">
         <div
-          className={`bg-white -mt-[0.5px] h-[18px] rounded-full`}
+          className={`bg-white -mt-[0.5px] h-4 rounded-full`}
           style={{ width: `${(timer / 60) * 100}%` }}
         />
         {timerAdjustment !== null && (
@@ -327,7 +330,11 @@ export default function Quiz({ params }: { params: { type: string } }) {
       </div>
       <div
         className={`font-bold tracking-widest ${
-          question.Level === "easy" ? "text-success" : "text-yellow"
+          question.Level === "easy"
+            ? "text-success"
+            : question.Level === "medium"
+            ? "text-yellow"
+            : "text-error"
         }`}
       >
         {capitalizeFirstLetter(question.Level)}
