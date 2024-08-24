@@ -74,8 +74,6 @@ export default function Quiz({ params }: { params: { type: string } }) {
       setNumbers(quizData.numbers);
     };
     fetchData();
-    setIsLoading(true);
-    removeLoadingScreen();
   }, [params.type]);
 
   // Start Timer
@@ -310,7 +308,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
       {/* Time Bar */}
       <div className="relative w-full h-5 border-[2px] rounded-full overflow-hidden">
         <div
-          className={`bg-white -mt-[0.5px] h-4 rounded-full`}
+          className={`bg-white -mt-[0.5px] h-[18px] rounded-full`}
           style={{ width: `${(timer / 60) * 100}%` }}
         />
         {timerAdjustment !== null && (
