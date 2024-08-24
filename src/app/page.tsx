@@ -41,7 +41,7 @@ export default function Home() {
         defaultValue="frontend"
         className="flex flex-col items-center md:items-start space-y-6"
       >
-        <TabsList className="grid w-full md:w-60 grid-cols-2 bg-primary border pt-2 pb-11 px-2">
+        <TabsList className="grid w-full md:w-[248px] grid-cols-2 bg-primary border pt-2 pb-11 px-2">
           <TabsTrigger
             value="frontend"
             className="font-bold tracking-widest text-white text-base"
@@ -77,7 +77,7 @@ export default function Home() {
         </TabsContent>
         <TabsContent
           value="backend"
-          className="w-full grid grid-cols-1 md:grid-cols-4 xl:grid-cols-5 gap-8"
+          className="w-full grid grid-cols-1 md:grid-cols-4 xl:grid-cols-5 gap-8 md:gap-6"
         >
           {backendList.map((v) => (
             <Card
