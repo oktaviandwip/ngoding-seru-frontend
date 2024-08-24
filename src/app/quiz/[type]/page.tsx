@@ -241,9 +241,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
             <CardTitle>Quiz Finished</CardTitle>
             <CardDescription className="flex justify-between">
               <div className="font-semibold">
-                <div className="text-dark-blue">
-                  Correct: {correctAnswersCount}
-                </div>
+                <div className="text-blue">Correct: {correctAnswersCount}</div>
                 <div className="text-error">
                   Incorrect: {incorrectAnswersCount}
                 </div>
@@ -277,7 +275,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
               <CardDescription
                 className={`${
                   answer.userAnswer === answer.correctAnswer
-                    ? "text-dark-blue font-semibold"
+                    ? "text-blue font-semibold"
                     : "text-error font-semibold"
                 }`}
               >
@@ -287,7 +285,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
                 className={`${
                   answer.userAnswer === answer.correctAnswer
                     ? "hidden"
-                    : "flex font-semibold text-dark-blue"
+                    : "flex font-semibold text-blue"
                 }`}
               >
                 Correct Answer: {answer.correctAnswer}
