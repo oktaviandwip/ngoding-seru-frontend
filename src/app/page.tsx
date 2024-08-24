@@ -18,19 +18,19 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import photoProfile from "@/assets/photo-profile.svg";
 
 const frontendList = [
-  { image: javascript, alt: "javascript", link: "/javascript" },
-  { image: typescript, alt: "typescript", link: "/typescript" },
-  { image: react, alt: "react", link: "/react" },
-  { image: nextjs, alt: "nextjs", link: "/nextjs" },
-  { image: tailwindcss, alt: "tailwind", link: "/tailwindcss" },
+  { image: javascript, alt: "Javascript", link: "/javascript" },
+  { image: typescript, alt: "Typescript", link: "/typescript" },
+  { image: react, alt: "React", link: "/react" },
+  { image: nextjs, alt: "Nextjs", link: "/nextjs" },
+  { image: tailwindcss, alt: "Tailwind", link: "/tailwindcss" },
 ];
 
 const backendList = [
-  { image: nodejs, alt: "nodejs", link: "/nodejs" },
-  { image: go, alt: "go", link: "/go" },
-  { image: postgresql, alt: "postgresql", link: "/postgresql" },
-  { image: mysql, alt: "mysql", link: "/mysql" },
-  { image: mongodb, alt: "mongoDB", link: "/mongodb" },
+  { image: nodejs, alt: "Nodejs", link: "/nodejs" },
+  { image: go, alt: "Go", link: "/go" },
+  { image: postgresql, alt: "Postgresql", link: "/postgresql" },
+  { image: mysql, alt: "Mysql", link: "/mysql" },
+  { image: mongodb, alt: "MongoDB", link: "/mongodb" },
 ];
 
 const formatter = new Intl.NumberFormat("id-ID", {
