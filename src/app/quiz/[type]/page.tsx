@@ -241,13 +241,13 @@ export default function Quiz({ params }: { params: { type: string } }) {
             <CardTitle>Quiz Finished</CardTitle>
             <CardDescription className="flex justify-between">
               <div className="font-semibold">
-                <div className="text-success">
+                <div className="text-dark-blue">
                   Correct: {correctAnswersCount}
                 </div>
                 <div className="text-error">
                   Incorrect: {incorrectAnswersCount}
                 </div>
-                <div className="text-yellow">Score: {score}/100</div>
+                {/* <div className="text-blue">Score: {score}/100</div> */}
               </div>
 
               <Button
@@ -277,7 +277,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
               <CardDescription
                 className={`${
                   answer.userAnswer === answer.correctAnswer
-                    ? "text-success font-semibold"
+                    ? "text-dark-blue font-semibold"
                     : "text-error font-semibold"
                 }`}
               >
@@ -287,7 +287,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
                 className={`${
                   answer.userAnswer === answer.correctAnswer
                     ? "hidden"
-                    : "flex font-semibold text-yellow"
+                    : "flex font-semibold text-dark-blue"
                 }`}
               >
                 Correct Answer: {answer.correctAnswer}

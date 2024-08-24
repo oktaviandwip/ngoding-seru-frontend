@@ -36,6 +36,9 @@ const config = {
         blue: {
           DEFAULT: "hsl(var(--blue))",
         },
+        "dark-blue": {
+          DEFAULT: "hsl(var(--dark-blue))",
+        },
         yellow: {
           DEFAULT: "hsl(var(--yellow))",
         },

@@ -33,6 +33,10 @@ const backendList = [
   { image: mongodb, alt: "MongoDB", link: "/mongodb" },
 ];
 
+const formatter = new Intl.NumberFormat("id-ID", {
+  maximumFractionDigits: 0,
+});
+
 export default function Home() {
   const router = useRouter();
 
@@ -54,7 +58,8 @@ export default function Home() {
                 <p className="text-blue">Rank</p>
                 <p>99</p>
                 <p className="text-xs">
-                  <span className="text-purple">from</span> 10000
+                  <span className="text-purple">from </span>
+                  {formatter.format(10000)}
                 </p>
               </div>
             </div>
