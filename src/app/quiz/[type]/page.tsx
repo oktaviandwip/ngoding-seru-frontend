@@ -245,7 +245,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
                 <div className="text-error">
                   Incorrect: {incorrectAnswersCount}
                 </div>
-                <div className="text-purple">Score: {score}</div>
+                {/* <div className="text-purple">Score: {score}</div> */}
               </div>
 
               <Button
