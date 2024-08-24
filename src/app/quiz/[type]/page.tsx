@@ -305,11 +305,13 @@ export default function Quiz({ params }: { params: { type: string } }) {
   return (
     <div className="space-y-4 mb-10">
       {/* Time Bar */}
-      <div className="relative w-full h-5 border-[2px] rounded-full overflow-hidden">
-        <div
-          className={`bg-white -mt-[0.5px] h-[18px] rounded-full`}
-          style={{ width: `${(timer / 60) * 100}%` }}
-        />
+      <div className="relative">
+        <div className="w-full h-5 border-[2px] rounded-full overflow-hidden">
+          <div
+            className={`bg-white -mt-[0.5px] h-[18px] rounded-full`}
+            style={{ width: `${(timer / 60) * 100}%` }}
+          />
+        </div>
         {timerAdjustment !== null && (
           <div
             className={`${
@@ -325,6 +327,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
           </div>
         )}
       </div>
+
       <div
         className={`font-bold tracking-widest ${
           question.Level === "easy"
