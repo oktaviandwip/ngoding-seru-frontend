@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { Icon } from "@iconify/react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import photoProfile from "@/assets/photo-profile.svg";
 
 const frontendList = [
   { image: javascript, alt: "Javascript", link: "/javascript" },
@@ -36,7 +37,38 @@ export default function Home() {
   const router = useRouter();
 
   return (
-    <main className="mb-10">
+    <main className="space-y-6 mb-10">
+      <div className="relative w-full flex flex-col items-center space-y-14">
+        <div>Welcome, Oktavian</div>
+        <div className="border w-[248px] h-36 rounded-xl">
+          <div className="border-t-[2px] mt-12">
+            <div className="w-full grid grid-cols-2 justify-center text-center py-3">
+              <div className="border-r">
+                <p className="text-blue">Score</p>
+                <p>99.99</p>
+                <p className="text-xs">
+                  <span className="text-purple">from</span> 100
+                </p>
+              </div>
+              <div>
+                <p className="text-blue">Rank</p>
+                <p>99</p>
+                <p className="text-xs">
+                  <span className="text-purple">from</span> 10000
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <Image
+          src={photoProfile}
+          alt={"Photo profile"}
+          width={70}
+          height={70}
+          className="absolute border-2 rounded-full -top-4"
+        />
+      </div>
+
       <Tabs
         defaultValue="frontend"
         className="flex flex-col items-center md:items-start space-y-6"

@@ -42,6 +42,9 @@ const config = {
         comment: {
           DEFAULT: "hsl(var(--comment))",
         },
+        purple: {
+          DEFAULT: "hsl(var(--purple))",
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
