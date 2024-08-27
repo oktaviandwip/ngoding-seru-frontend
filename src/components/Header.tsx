@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/assets/ngoding-seru-logo-putih.png";
@@ -9,6 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { logout } from "@/store/reducer/auth";
 import { getProfile } from "@/store/reducer/user";
+import { getStat } from "@/store/reducer/stat";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter, usePathname } from "next/navigation";
 import type { AppDispatch, RootState } from "@/store";
@@ -24,17 +25,34 @@ export default function Header() {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
 
   const handleLogout = () => {
-    router.push("/login");
+    router.push("/");
     dispatch(logout());
     dispatch(getProfile(null));
+    dispatch(getStat(null));
   };
+
+  // Closed when clicked outside card
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setIsProfileOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [setIsProfileOpen]);
 
   const navUser = [
     { href: "/", label: "Home" },
-    { href: "/admin/questions", label: "Admin" },
-    { href: "/products/orders", label: "Pesanan" },
+    { href: "/admin/questions", label: "Leaderboards" },
+    { href: "/products/orders", label: "Stats" },
   ];
 
   const navAdmin = [
@@ -45,7 +63,10 @@ export default function Header() {
   const navItems = pathname.startsWith("/admin") ? navAdmin : navUser;
 
   return (
-    <header className="relative inset-x-0 flex items-center h-20 z-50 bg-primary border-b-[1px]">
+    <header
+      ref={ref}
+      className="relative inset-x-0 flex items-center h-20 z-50 bg-primary border-b-[1px]"
+    >
       <div className="container flex justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center space-x-4">
@@ -97,7 +118,9 @@ export default function Header() {
               className="hidden lg:flex items-center space-x-4 cursor-pointer"
               onClick={() => setIsProfileOpen(!isProfileOpen)}
             >
-              <span className="text-lg">{profile?.Username || "new user"}</span>
+              <span className="text-lg">
+                {profile?.Full_name.split(" ")[0] || "new user"}
+              </span>
               <Avatar>
                 <AvatarImage
                   src={profile?.Image}
@@ -154,7 +177,7 @@ export default function Header() {
               <Link href="/admin/questions">
                 <Button>Admin</Button>
               </Link>
-              <Link href="/login">
+              <Link href="/">
                 <Button variant={"outline"} className="text-primary">
                   Masuk
                 </Button>
@@ -196,7 +219,7 @@ export default function Header() {
                 />
               </AvatarFallback>
             </Avatar>
-            <div className="text-lg mb-6 mt-2">{profile?.Username}</div>
+            <div className="text-lg mb-6 mt-2">{profile?.Full_name}</div>
             <div className="flex flex-col space-y-2 w-full">
               {isAuth ? (
                 <>
@@ -244,7 +267,7 @@ export default function Header() {
                   <Button
                     variant={"secondary"}
                     className="w-full text-center py-2 hover:bg-gray-100 rounded-lg transition-colors"
-                    onClick={() => router.push("/login")}
+                    onClick={() => router.push("/")}
                   >
                     Masuk
                   </Button>

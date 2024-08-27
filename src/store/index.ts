@@ -12,7 +12,7 @@ import {
 import storage from "redux-persist/lib/storage";
 import authReducer from "./reducer/auth";
 import userReducer from "./reducer/user";
-import orderReducer from './reducer/order';
+import statReducer from './reducer/stat';
 
 // Persist configuration
 const persistConfig = {
@@ -24,7 +24,7 @@ const persistConfig = {
 const reducers = combineReducers({
   auth: authReducer,
   user: userReducer,
-  order: orderReducer,
+  stat: statReducer,
 });
 
 // Create persisted reducer

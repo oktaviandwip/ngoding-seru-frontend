@@ -11,12 +11,15 @@ import {
 import Image from "next/image";
 import Loading from "@/components/Loading";
 import { Button } from "@/components/ui/button";
+import { useSelector, useDispatch } from "react-redux";
+import type { AppDispatch, RootState } from "@/store";
+import { getStat } from "@/store/reducer/stat";
 
 interface Question {
   Image: string;
   Question: string;
   Answer: string;
-  Level: string;
+  Level: "easy" | "medium" | "hard";
   Option_a: string;
   Option_b: string;
   Option_c: string;
@@ -59,6 +62,23 @@ export default function Quiz({ params }: { params: { type: string } }) {
   const [quizFinished, setQuizFinished] = useState(false);
   const [isCorrectAnswer, setIsCorrectAnswer] = useState<boolean | null>(null);
   const [timerAdjustment, setTimerAdjustment] = useState<number | null>(null);
+  const [scoreAdjustment, setScoreAdjustment] = useState<number | null>(null);
+  const [totalScore, setTotalScore] = useState(0);
+
+  const [correctAnswers, setCorrectAnswers] = useState({
+    easy: 0,
+    medium: 0,
+    hard: 0,
+  });
+
+  const [incorrectAnswers, setIncorrectAnswers] = useState({
+    easy: 0,
+    medium: 0,
+    hard: 0,
+  });
+
+  const { profile } = useSelector((state: RootState) => state.user);
+  const dispatch: AppDispatch = useDispatch();
 
   // Set Loading Screen
   const removeLoadingScreen = () => {
@@ -134,6 +154,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
       }
       setIsCorrectAnswer(null);
       setSelectedOption("");
+      setScoreAdjustment(null);
       setTimerAdjustment(null);
       return newIndex;
     });
@@ -157,12 +178,26 @@ export default function Quiz({ params }: { params: { type: string } }) {
     setIsCorrectAnswer(isCorrect);
 
     let adjustment = 0;
+    let score = 0;
+
     if (isCorrect) {
       adjustment = level === "easy" ? 4 : level === "medium" ? 8 : 12;
+      score = level === "easy" ? 1 : level === "medium" ? 2 : 3;
+      setCorrectAnswers((prev) => ({
+        ...prev,
+        [level]: prev[level] + 1,
+      }));
     } else {
       adjustment = level === "easy" ? -12 : level === "medium" ? -8 : -4;
+      score = level === "easy" ? -3 : level === "medium" ? -2 : -1;
+      setIncorrectAnswers((prev) => ({
+        ...prev,
+        [level]: prev[level] + 1,
+      }));
     }
 
+    setTotalScore((prev) => prev + score);
+    setScoreAdjustment(score);
     setTimerAdjustment(adjustment);
     updateTimer(adjustment);
 
@@ -192,41 +227,40 @@ export default function Quiz({ params }: { params: { type: string } }) {
     return word.charAt(0).toUpperCase() + word.slice(1);
   };
 
-  // Round Up Score
-  function roundUp(number: number) {
-    const stringNumber = number.toString();
-    const decimalIndex = stringNumber.indexOf(".");
-    if (decimalIndex === -1) {
-      return number;
-    }
-    const lastTwoDigits = stringNumber.substring(
-      decimalIndex + 1,
-      decimalIndex + 3
-    );
-    const roundedLastTwoDigits = Math.ceil(parseFloat(lastTwoDigits));
-    const result = parseFloat(
-      stringNumber.substring(0, decimalIndex) + "." + roundedLastTwoDigits
-    );
-    return result;
-  }
-
-  // Calculate Score
-  const correctAnswersCount = userAnswers.filter(
-    (answer) => answer.userAnswer === answer.correctAnswer
-  ).length;
-
-  const incorrectAnswersCount = userAnswers.length - correctAnswersCount;
-  const score =
-    correctAnswersCount + incorrectAnswersCount === 0
-      ? 0
-      : roundUp(
-          (correctAnswersCount /
-            (correctAnswersCount + incorrectAnswersCount)) *
-            100
-        );
-
   // Current Question
   const question = reorderedQuestions[currentQuestionIndex];
+
+  // Update Score
+  useEffect(() => {
+    if (quizFinished) {
+      const data = {
+        user_id: profile?.Id,
+        type: params.type,
+        easy_correct: correctAnswers.easy,
+        easy_incorrect: incorrectAnswers.easy,
+        medium_correct: correctAnswers.medium,
+        medium_incorrect: incorrectAnswers.medium,
+        hard_correct: correctAnswers.hard,
+        hard_incorrect: incorrectAnswers.hard,
+      };
+
+      const updateScore = async () => {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/stats/`,
+          {
+            method: "POST",
+            body: JSON.stringify(data),
+          }
+        );
+        if (response.ok) {
+          const { data } = await response.json();
+          dispatch(getStat(data));
+        }
+      };
+
+      updateScore();
+    }
+  }, [quizFinished]);
 
   // Render Loading Screen
   if (isLoading) {
@@ -239,13 +273,9 @@ export default function Quiz({ params }: { params: { type: string } }) {
         <Card className="bg-primary text-white">
           <CardHeader>
             <CardTitle>Quiz Finished</CardTitle>
-            <CardDescription className="flex justify-between">
+            <CardDescription className="flex justify-between items-center pt-2">
               <div className="font-semibold">
-                <div className="text-blue">Correct: {correctAnswersCount}</div>
-                <div className="text-error">
-                  Incorrect: {incorrectAnswersCount}
-                </div>
-                {/* <div className="text-purple">Score: {score}</div> */}
+                <div className="text-blue">Score: {totalScore}</div>
               </div>
 
               <Button
@@ -298,9 +328,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
     );
   }
 
-  if (!question) {
-    return <Loading />;
-  }
+  if (!question) return null;
 
   return (
     <div className="space-y-4 mb-10">
@@ -315,7 +343,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
         {timerAdjustment !== null && (
           <div
             className={`${
-              timerAdjustment > 0 ? "text-blue" : "text-error"
+              timerAdjustment > 0 ? "text-success" : "text-error"
             } font-bold absolute`}
             style={{
               left: `${(timer / 60) * 100}%`,
@@ -328,17 +356,33 @@ export default function Quiz({ params }: { params: { type: string } }) {
         )}
       </div>
 
-      <div
-        className={`font-bold tracking-widest ${
-          question.Level === "easy"
-            ? "text-blue"
-            : question.Level === "medium"
-            ? "text-purple"
-            : "text-error"
-        }`}
-      >
-        {capitalizeFirstLetter(question.Level)}
+      <div className="flex justify-between pt-1">
+        <div className="flex">
+          <div className="text-yellow font-bold">Score: {totalScore}</div>
+          {scoreAdjustment !== null && (
+            <div
+              className={`${
+                scoreAdjustment > 0 ? "text-success" : "text-error"
+              } font-bold ml-4`}
+            >
+              {scoreAdjustment > 0 ? `+${scoreAdjustment}` : scoreAdjustment}
+            </div>
+          )}
+        </div>
+
+        <div
+          className={`font-bold tracking-widest ${
+            question.Level === "easy"
+              ? "text-blue"
+              : question.Level === "medium"
+              ? "text-purple"
+              : "text-error"
+          }`}
+        >
+          {capitalizeFirstLetter(question.Level)}
+        </div>
       </div>
+
       <div
         className={`${
           question.Image ? "flex" : "hidden"
@@ -361,7 +405,7 @@ export default function Quiz({ params }: { params: { type: string } }) {
             className={`${
               selectedOption === v
                 ? isCorrectAnswer === true
-                  ? "bg-blue border border-blue hover:border-blue text-primary"
+                  ? "bg-success border border-success hover:border-success text-white"
                   : "bg-error border border-error hover:border-error text-white"
                 : "bg-primary text-white border md:hover:bg-white md:hover:text-primary"
             } flex items-center justify-center text-center rounded-lg p-2 text-sm cursor-pointer`}
