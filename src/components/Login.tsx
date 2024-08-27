@@ -107,7 +107,7 @@ const Login: React.FC<Props> = ({ setShowLogin }) => {
   const handleGoogleLogin = () => {
     if (!session) {
       signIn("google", {
-        callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/callback-login`,
+        callbackUrl: `${process.env.NEXT_PUBLIC_FE_URL}/api/auth/callback-login`,
       });
     } else {
       setData((prevData) => ({
