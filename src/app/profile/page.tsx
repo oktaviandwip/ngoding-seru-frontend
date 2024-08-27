@@ -236,7 +236,7 @@ export default function UserProfileForm() {
     if (res.ok) {
       const { data } = await res.json();
       dispatch(getProfile(data));
-      router.push("/");
+      router.push("/profile");
     } else {
       console.error("Failed to submit the form");
     }
