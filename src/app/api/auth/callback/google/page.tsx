@@ -3,7 +3,7 @@
 // pages/api/auth/callback/google.ts
 import { signIn, useSession } from "next-auth/react";
 
-export default function handler() {
+export default function Callback() {
   const { data: session } = useSession();
 
   if (session) {
