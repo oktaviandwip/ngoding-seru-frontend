@@ -1,7 +1,6 @@
-// pages/api/auth/callback/google.ts or .js
-
-import { getSession } from "next-auth/react";
+// pages/api/auth/callback/google.ts
 import type { NextApiRequest, NextApiResponse } from "next";
+import { getSession } from "next-auth/react";
 
 export default async function handler(
   req: NextApiRequest,
@@ -10,10 +9,10 @@ export default async function handler(
   const session = await getSession({ req });
 
   if (session) {
-    // Session is available
-    res.redirect("/login");
-  } else {
-    // No session found
+    // Handle authenticated session
     res.redirect("/");
+  } else {
+    // Handle unauthenticated session
+    res.redirect("/login");
   }
 }
