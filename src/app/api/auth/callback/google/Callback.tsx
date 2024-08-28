@@ -1,14 +1,13 @@
 "use client";
 
-import { getSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "@/components/ui/use-toast";
-import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch, RootState } from "@/store";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "@/store";
 import { login } from "@/store/reducer/auth";
 import { getProfile } from "@/store/reducer/user";
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 type Data = {
   email: string;
@@ -20,7 +19,7 @@ type Data = {
 export default function AuthCallback() {
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   const [data, setData] = useState<Data>({
     email: "",
@@ -42,8 +41,7 @@ export default function AuthCallback() {
   };
 
   // Handle Submit
-  const handleSubmit = async (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
+  const handleSubmit = async () => {
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/auth/`,
@@ -83,24 +81,17 @@ export default function AuthCallback() {
 
   // Fetch Session
   useEffect(() => {
-    // const fetchSession = async () => {
-    //   const session = await getSession();
-    //   console.log(session);
-    if (session) {
+    if (status === "authenticated" && session) {
       setData((prevData) => ({
         ...prevData,
         email: session.user?.email || "",
-        image: session.user?.image || "",
+        full_name: session.user?.name || "",
         isGoogle: true,
       }));
-    } else {
-      console.log(data);
+    } else if (status === "unauthenticated") {
       router.push("/");
     }
-    // };
-
-    // fetchSession();
-  }, []);
+  }, [status, session, router]);
 
   useEffect(() => {
     if (data.isGoogle) {
