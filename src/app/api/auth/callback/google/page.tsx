@@ -1,3 +1,5 @@
+"use client";
+
 // pages/api/auth/callback/google.ts
 import { getSession } from "next-auth/react";
 
