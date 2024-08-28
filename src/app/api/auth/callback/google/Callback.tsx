@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "@/store";
 import { login } from "@/store/reducer/auth";
 import { getProfile } from "@/store/reducer/user";
+import { signIn, useSession } from "next-auth/react";
 
 type Data = {
   email: string;
@@ -19,6 +20,7 @@ type Data = {
 export default function AuthCallback() {
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
+  const { data: session } = useSession();
 
   const [data, setData] = useState<Data>({
     email: "",
@@ -40,49 +42,48 @@ export default function AuthCallback() {
   };
 
   // Handle Submit
-  const handleSubmit = async (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/auth/`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
+  // const handleSubmit = async (e?: React.FormEvent) => {
+  //   if (e) e.preventDefault();
+  //   try {
+  //     const response = await fetch(
+  //       `${process.env.NEXT_PUBLIC_BASE_URL}/auth/`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify(data),
+  //       }
+  //     );
 
-      if (response.ok) {
-        const res = await response.json();
-        const { Token, User } = res.data;
+  //     if (response.ok) {
+  //       const res = await response.json();
+  //       const { Token, User } = res.data;
 
-        if (Token && User) {
-          dispatch(getProfile(User));
-          dispatch(login(Token));
-          router.push("/");
-        } else {
-          handleToast("error", res.statusText);
-          console.error("Error:", res.statusText);
-          router.push("/");
-        }
-      } else {
-        const data = await response.json();
-        handleToast("error", data.description);
-        console.error("Login failed:", data.description);
-        router.push("/");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      router.push("/");
-    }
-  };
+  //       if (Token && User) {
+  //         dispatch(getProfile(User));
+  //         dispatch(login(Token));
+  //         router.push("/");
+  //       } else {
+  //         handleToast("error", res.statusText);
+  //         console.error("Error:", res.statusText);
+  //         router.push("/");
+  //       }
+  //     } else {
+  //       const data = await response.json();
+  //       handleToast("error", data.description);
+  //       console.error("Login failed:", data.description);
+  //       router.push("/");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //     router.push("/");
+  //   }
+  // };
 
   // Fetch Session
   useEffect(() => {
     const fetchSession = async () => {
-      const session = await getSession();
       console.log(session);
       if (session) {
         setData((prevData) => ({
@@ -102,7 +103,7 @@ export default function AuthCallback() {
 
   useEffect(() => {
     if (data.isGoogle) {
-      handleSubmit();
+      // handleSubmit();
     }
   }, [data.isGoogle]);
 

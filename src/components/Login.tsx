@@ -17,7 +17,8 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 import { toast } from "@/components/ui/use-toast";
-import { login, getProfile } from "@/store/reducer/auth";
+import { login } from "@/store/reducer/auth";
+import { getProfile } from "@/store/reducer/user";
 import type { AppDispatch } from "@/store";
 import { GetSession } from "@/components/GetSession";
 
@@ -104,6 +105,7 @@ const Login: React.FC<Props> = ({ setShowLogin }) => {
   };
 
   useEffect(() => {
+    console.log(session);
     const fetchSession = async () => {
       try {
         const res = await GetSession();
