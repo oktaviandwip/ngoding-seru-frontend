@@ -35,7 +35,6 @@ const Login: React.FC<Props> = ({ setShowLogin }) => {
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
   const { data: session } = useSession();
-
   const [data, setData] = useState<Data>({
     email: "",
     password: "",
@@ -90,6 +89,7 @@ const Login: React.FC<Props> = ({ setShowLogin }) => {
           dispatch(getProfile(User));
           dispatch(login(Token));
           setShowLogin(false);
+          router.push("/"); // Redirect after successful login
         } else {
           console.error("Error:", res.statusText);
         }
@@ -132,7 +132,7 @@ const Login: React.FC<Props> = ({ setShowLogin }) => {
     }
   }, [data.isGoogle]);
 
-  // Closed when clicked outside card
+  // Close when clicked outside card
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (cardRef.current && !cardRef.current.contains(event.target as Node)) {
