@@ -21,6 +21,7 @@ import { useSelector, useDispatch } from "react-redux";
 import type { AppDispatch, RootState } from "@/store";
 import Login from "@/components/Login";
 import { getStat } from "@/store/reducer/stat";
+import { signIn, useSession } from "next-auth/react";
 
 const frontendList = [
   { image: javascript, alt: "Javascript", link: "/javascript" },
@@ -62,14 +63,31 @@ function roundUp(number: number) {
 }
 
 export default function Home() {
-  const [showLogin, setShowLogin] = useState(false);
-  const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
+  const dispatch: AppDispatch = useDispatch();
 
+  const [showLogin, setShowLogin] = useState(false);
+  const { data: session } = useSession();
   const { isAuth } = useSelector((state: RootState) => state.auth);
   const { profile } = useSelector((state: RootState) => state.user);
   const { stat } = useSelector((state: RootState) => state.stat);
 
+  // Get Session
+  useEffect(() => {
+    if (session) {
+      console.log("sampai");
+      // setData((prevData) => ({
+      //   ...prevData,
+      //   image: session.user?.image || "",
+      //   email: session.user?.email || "",
+      //   full_name: session.user?.name || "",
+      // }));
+    } else {
+      console.log("sini");
+    }
+  }, [session]);
+
+  // Handle Card Click
   const handleCardClick = (link: string) => {
     if (isAuth) {
       router.push(`/quiz/${link}`);
