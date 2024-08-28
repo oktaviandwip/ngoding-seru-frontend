@@ -11,9 +11,9 @@ export default async function handler(
 
   if (session) {
     // Session is available
-    res.redirect("/"); // Redirect to home or other page
+    res.redirect("/");
   } else {
     // No session found
-    res.redirect("/login"); // Redirect to login page
+    res.redirect("/login");
   }
 }
