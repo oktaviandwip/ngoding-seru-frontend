@@ -135,7 +135,7 @@ export default function Home() {
             alt={"Photo profile"}
             width={70}
             height={70}
-            className="absolute border-2 rounded-full -top-4"
+            className="absolute border-2 rounded-full -top-4 bg-primary"
           />
         </div>
 
