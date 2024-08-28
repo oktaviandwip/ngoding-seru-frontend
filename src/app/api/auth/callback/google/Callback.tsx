@@ -42,7 +42,6 @@ export default function AuthCallback() {
   // Handle Submit
   const handleSubmit = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    console.log(data);
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/auth/`,
@@ -92,6 +91,7 @@ export default function AuthCallback() {
           isGoogle: true,
         }));
       } else {
+        console.log(data);
         router.push("/");
       }
     };
