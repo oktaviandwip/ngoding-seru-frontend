@@ -83,6 +83,7 @@ export default function AuthCallback() {
   useEffect(() => {
     const fetchSession = async () => {
       const session = await getSession();
+      console.log(session);
       if (session) {
         setData((prevData) => ({
           ...prevData,
