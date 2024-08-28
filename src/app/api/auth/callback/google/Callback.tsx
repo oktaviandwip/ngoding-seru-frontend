@@ -81,6 +81,7 @@ export default function AuthCallback() {
 
   // Fetch Session
   useEffect(() => {
+    console.log(session);
     if (status === "authenticated" && session) {
       setData((prevData) => ({
         ...prevData,
