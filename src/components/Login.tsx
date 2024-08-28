@@ -15,7 +15,7 @@ import { Icon } from "@iconify/react";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { toast } from "@/components/ui/use-toast";
 import { login } from "@/store/reducer/auth";
 import { getProfile } from "@/store/reducer/user";
@@ -48,86 +48,64 @@ const Login: React.FC<Props> = ({ setShowLogin, session }) => {
   const [showForm, setShowForm] = useState<boolean>(false);
   const cardRef = useRef<HTMLDivElement>(null);
 
-  // const handleToast = (type: "success" | "error", desc: string) => {
-  //   toast({
-  //     description: desc,
-  //     className: `fixed top-0 inset-x-0 md:w-96 md:mx-auto p-4 border-none rounded-lg z-[999] ${
-  //       type === "success"
-  //         ? "bg-success text-white"
-  //         : "bg-destructive text-white"
-  //     }`,
-  //   });
-  // };
+  // Handle Toast
+  const handleToast = (type: "success" | "error", desc: string) => {
+    toast({
+      description: desc,
+      className: `fixed top-0 inset-x-0 md:w-96 md:mx-auto p-4 border-none rounded-lg z-[999] ${
+        type === "success"
+          ? "bg-success text-white"
+          : "bg-destructive text-white"
+      }`,
+    });
+  };
 
-  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { id, value } = e.target;
-  //   setData((prevData) => ({
-  //     ...prevData,
-  //     [id]: value,
-  //     isGoogle: false,
-  //   }));
-  // };
+  // Handle Change
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setData((prevData) => ({
+      ...prevData,
+      [id]: value,
+      isGoogle: false,
+    }));
+  };
 
-  // const handleSubmit = async (e?: React.FormEvent) => {
-  //   if (e) e.preventDefault();
-  //   try {
-  //     const response = await fetch(
-  //       `${process.env.NEXT_PUBLIC_BASE_URL}/auth/`,
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify(data),
-  //       }
-  //     );
+  // Handle Submit
+  const handleSubmit = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/auth/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
 
-  //     if (response.ok) {
-  //       const res = await response.json();
-  //       const { Token, User } = res.data;
+      if (response.ok) {
+        const res = await response.json();
+        const { Token, User } = res.data;
 
-  //       if (Token && User) {
-  //         dispatch(getProfile(User));
-  //         dispatch(login(Token));
-  //         setShowLogin(false);
-  //         router.push("/"); // Redirect after successful login
-  //       } else {
-  //         handleToast("error", "Unexpected error occurred.");
-  //       }
-  //     } else {
-  //       const errorData = await response.json();
-  //       handleToast("error", errorData.description || "Login failed.");
-  //     }
-  //   } catch (error) {
-  //     handleToast("error", "An error occurred while processing your request.");
-  //     console.error("Error:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   console.log(session);
-  //   const fetchSession = async () => {
-  //     try {
-  //       const res = await GetSession();
-  //       console.log(res);
-  //       const { Token, User } = res.data;
-
-  //       if (Token && User) {
-  //         dispatch(getProfile(User));
-  //         dispatch(login(Token));
-  //         setShowLogin(false);
-  //         router.push("/"); // Redirect after successful login
-  //       } else {
-  //         handleToast("error", "Session fetching failed.");
-  //       }
-  //     } catch (error) {
-  //       handleToast("error", "An error occurred while fetching the session.");
-  //       console.error("Error:", error);
-  //     }
-  //   };
-
-  //   fetchSession();
-  // }, []);
+        if (Token && User) {
+          dispatch(getProfile(User));
+          dispatch(login(Token));
+          setShowLogin(false);
+          router.push("/"); // Redirect after successful login
+        } else {
+          handleToast("error", "Unexpected error occurred.");
+        }
+      } else {
+        const errorData = await response.json();
+        handleToast("error", errorData.description || "Login failed.");
+      }
+    } catch (error) {
+      handleToast("error", "An error occurred while processing your request.");
+      console.error("Error:", error);
+    }
+  };
 
   const handleGoogleLogin = () => {
     if (!session) {
@@ -143,36 +121,36 @@ const Login: React.FC<Props> = ({ setShowLogin, session }) => {
   useEffect(() => {
     if (session) {
       console.log("sampai");
-      // setData((prevData) => ({
-      //   ...prevData,
-      //   image: session.user?.image || "",
-      //   email: session.user?.email || "",
-      //   full_name: session.user?.name || "",
-      // }));
+      setData((prevData) => ({
+        ...prevData,
+        image: session.user?.image || "",
+        email: session.user?.email || "",
+        full_name: session.user?.name || "",
+      }));
     } else {
       console.log("sini");
     }
   }, [session]);
 
-  // useEffect(() => {
-  //   if (data.isGoogle) {
-  //     handleSubmit();
-  //   }
-  // }, [data.isGoogle]);
+  useEffect(() => {
+    if (data.isGoogle) {
+      handleSubmit();
+    }
+  }, [data.isGoogle]);
 
-  // useEffect(() => {
-  //   const handleClickOutside = (event: MouseEvent) => {
-  //     if (cardRef.current && !cardRef.current.contains(event.target as Node)) {
-  //       setShowLogin(false);
-  //     }
-  //   };
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (cardRef.current && !cardRef.current.contains(event.target as Node)) {
+        setShowLogin(false);
+      }
+    };
 
-  //   document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, [setShowLogin]);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [setShowLogin]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen space-y-10 pb-10">
