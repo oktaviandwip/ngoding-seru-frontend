@@ -80,6 +80,7 @@ export default function Home() {
 
   // Get Stat
   useEffect(() => {
+    console.log("sampai");
     const getScore = async () => {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/stats/?user_id=${profile?.Id}`
