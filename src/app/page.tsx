@@ -67,10 +67,11 @@ export default function Home() {
   const dispatch: AppDispatch = useDispatch();
 
   const [showLogin, setShowLogin] = useState(false);
-  const { data: session } = useSession();
+
   const { isAuth } = useSelector((state: RootState) => state.auth);
   const { profile } = useSelector((state: RootState) => state.user);
   const { stat } = useSelector((state: RootState) => state.stat);
+  const { data: session } = useSession();
 
   // Handle Card Click
   const handleCardClick = (link: string) => {

@@ -20,7 +20,7 @@ import { toast } from "@/components/ui/use-toast";
 import { login } from "@/store/reducer/auth";
 import { getProfile } from "@/store/reducer/user";
 import type { AppDispatch } from "@/store";
-import { GetSession } from "@/components/GetSession";
+import { Session } from "next-auth";
 
 type Data = {
   email: string;
@@ -31,11 +31,7 @@ type Data = {
 
 type Props = {
   setShowLogin: (show: boolean) => void;
-  session: {
-    name: string;
-    email: string;
-    image: string;
-  };
+  session: Session | null;
 };
 
 const Login: React.FC<Props> = ({ setShowLogin, session }) => {
@@ -134,7 +130,7 @@ const Login: React.FC<Props> = ({ setShowLogin, session }) => {
   // }, []);
 
   const handleGoogleLogin = () => {
-    if (!session.name) {
+    if (!session) {
       signIn();
     } else {
       setData((prevData) => ({
