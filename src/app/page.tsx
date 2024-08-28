@@ -72,21 +72,6 @@ export default function Home() {
   const { profile } = useSelector((state: RootState) => state.user);
   const { stat } = useSelector((state: RootState) => state.stat);
 
-  // Get Session
-  useEffect(() => {
-    if (session) {
-      console.log("sampai");
-      // setData((prevData) => ({
-      //   ...prevData,
-      //   image: session.user?.image || "",
-      //   email: session.user?.email || "",
-      //   full_name: session.user?.name || "",
-      // }));
-    } else {
-      console.log("sini");
-    }
-  }, [session]);
-
   // Handle Card Click
   const handleCardClick = (link: string) => {
     if (isAuth) {
@@ -220,7 +205,7 @@ export default function Home() {
       {/* Login Popover */}
       {showLogin && (
         <div className="fixed inset-0 bg-black bg-opacity-70 z-50">
-          <Login setShowLogin={setShowLogin} />
+          <Login setShowLogin={setShowLogin} session={session} />
         </div>
       )}
     </>

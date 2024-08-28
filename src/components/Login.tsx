@@ -31,12 +31,16 @@ type Data = {
 
 type Props = {
   setShowLogin: (show: boolean) => void;
+  session: {
+    name: string;
+    email: string;
+    image: string;
+  };
 };
 
-const Login: React.FC<Props> = ({ setShowLogin }) => {
+const Login: React.FC<Props> = ({ setShowLogin, session }) => {
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
-  const { data: session } = useSession();
 
   const [data, setData] = useState<Data>({
     email: "",
@@ -130,7 +134,7 @@ const Login: React.FC<Props> = ({ setShowLogin }) => {
   // }, []);
 
   const handleGoogleLogin = () => {
-    if (!session) {
+    if (!session.name) {
       signIn();
     } else {
       setData((prevData) => ({
@@ -143,12 +147,12 @@ const Login: React.FC<Props> = ({ setShowLogin }) => {
   useEffect(() => {
     if (session) {
       console.log("sampai");
-      setData((prevData) => ({
-        ...prevData,
-        image: session.user?.image || "",
-        email: session.user?.email || "",
-        full_name: session.user?.name || "",
-      }));
+      // setData((prevData) => ({
+      //   ...prevData,
+      //   image: session.user?.image || "",
+      //   email: session.user?.email || "",
+      //   full_name: session.user?.name || "",
+      // }));
     } else {
       console.log("sini");
     }
