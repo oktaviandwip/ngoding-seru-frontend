@@ -1,13 +1,13 @@
 "use client";
 
+import { getSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "@/components/ui/use-toast";
-import { useDispatch } from "react-redux";
-import type { AppDispatch } from "@/store";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "@/store";
 import { login } from "@/store/reducer/auth";
 import { getProfile } from "@/store/reducer/user";
-import { useSession } from "next-auth/react";
 
 type Data = {
   email: string;
@@ -19,7 +19,6 @@ type Data = {
 export default function AuthCallback() {
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
-  const { data: session, status } = useSession();
 
   const [data, setData] = useState<Data>({
     email: "",
@@ -41,7 +40,8 @@ export default function AuthCallback() {
   };
 
   // Handle Submit
-  const handleSubmit = async () => {
+  const handleSubmit = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/auth/`,
@@ -81,18 +81,24 @@ export default function AuthCallback() {
 
   // Fetch Session
   useEffect(() => {
-    console.log(session);
-    if (status === "authenticated" && session) {
-      setData((prevData) => ({
-        ...prevData,
-        email: session.user?.email || "",
-        full_name: session.user?.name || "",
-        isGoogle: true,
-      }));
-    } else if (status === "unauthenticated") {
-      router.push("/");
-    }
-  }, [status, session, router]);
+    const fetchSession = async () => {
+      const session = await getSession();
+      console.log(session);
+      if (session) {
+        setData((prevData) => ({
+          ...prevData,
+          email: session.user?.email || "",
+          image: session.user?.image || "",
+          isGoogle: true,
+        }));
+      } else {
+        console.log(data);
+        router.push("/");
+      }
+    };
+
+    fetchSession();
+  }, []);
 
   useEffect(() => {
     if (data.isGoogle) {
