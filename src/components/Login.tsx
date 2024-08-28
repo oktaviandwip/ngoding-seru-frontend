@@ -18,8 +18,9 @@ import { getProfile } from "@/store/reducer/user";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "@/store";
 import { useRouter } from "next/navigation";
-import { signIn, useSession } from "next-auth/react";
+import { signIn, useSession, getSession } from "next-auth/react";
 import { toast } from "@/components/ui/use-toast";
+import { GetSession } from "@/components/GetSession";
 
 type Data = {
   email: string;
@@ -107,13 +108,14 @@ const Login: React.FC<Props> = ({ setShowLogin }) => {
 
   // Handle Google Login
   const handleGoogleLogin = () => {
-    // if (!session) {
-    //   signIn("google", { callbackUrl: "/api/auth/callback/google" });
-    // } else {
-    setData((prevData) => ({
-      ...prevData,
-      isGoogle: true,
-    }));
+    if (!session) {
+      signIn("google");
+    } else {
+      setData((prevData) => ({
+        ...prevData,
+        isGoogle: true,
+      }));
+    }
   };
 
   useEffect(() => {
@@ -132,6 +134,28 @@ const Login: React.FC<Props> = ({ setShowLogin }) => {
       handleSubmit();
     }
   }, [data.isGoogle]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await GetSession();
+        const { Token, User } = res.data;
+
+        if (Token && User) {
+          dispatch(getProfile(User));
+          dispatch(login(Token));
+          setShowLogin(false);
+          router.push("/"); // Redirect after successful login
+        } else {
+          console.error("Error:", res.statusText);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   // Close when clicked outside card
   useEffect(() => {
