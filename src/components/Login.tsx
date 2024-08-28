@@ -124,6 +124,7 @@ const Login: React.FC<Props> = ({ setShowLogin }) => {
         email: session.user?.email || "",
         image: session.user?.image || "",
         full_name: session.user?.name || "",
+        isGoogle: true,
       }));
     }
   }, [session]);
