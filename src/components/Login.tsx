@@ -5,21 +5,20 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
+  CardDescription,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
-import { login } from "@/store/reducer/auth";
-import { getProfile } from "@/store/reducer/user";
 import { useDispatch } from "react-redux";
-import type { AppDispatch } from "@/store";
 import { useRouter } from "next/navigation";
-import { signIn, useSession, getSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { toast } from "@/components/ui/use-toast";
+import { login, getProfile } from "@/store/reducer/auth";
+import type { AppDispatch } from "@/store";
 import { GetSession } from "@/components/GetSession";
 
 type Data = {
@@ -37,6 +36,7 @@ const Login: React.FC<Props> = ({ setShowLogin }) => {
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
   const { data: session } = useSession();
+
   const [data, setData] = useState<Data>({
     email: "",
     password: "",
@@ -47,19 +47,17 @@ const Login: React.FC<Props> = ({ setShowLogin }) => {
   const [showForm, setShowForm] = useState<boolean>(false);
   const cardRef = useRef<HTMLDivElement>(null);
 
-  // Handle Toast
   const handleToast = (type: "success" | "error", desc: string) => {
     toast({
       description: desc,
-      className: `${
+      className: `fixed top-0 inset-x-0 md:w-96 md:mx-auto p-4 border-none rounded-lg z-[999] ${
         type === "success"
           ? "bg-success text-white"
           : "bg-destructive text-white"
-      } fixed top-0 flex items-center justify-center inset-x-0 md:w-96 md:mx-auto p-4 border-none rounded-none md:rounded-lg z-[999]`,
+      }`,
     });
   };
 
-  // Handle Change
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setData((prevData) => ({
@@ -69,7 +67,6 @@ const Login: React.FC<Props> = ({ setShowLogin }) => {
     }));
   };
 
-  // Handle Submit
   const handleSubmit = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     try {
@@ -94,19 +91,42 @@ const Login: React.FC<Props> = ({ setShowLogin }) => {
           setShowLogin(false);
           router.push("/"); // Redirect after successful login
         } else {
-          console.error("Error:", res.statusText);
+          handleToast("error", "Unexpected error occurred.");
         }
       } else {
-        const data = await response.json();
-        handleToast("error", data.description);
-        console.error("Login failed:", data.description);
+        const errorData = await response.json();
+        handleToast("error", errorData.description || "Login failed.");
       }
     } catch (error) {
+      handleToast("error", "An error occurred while processing your request.");
       console.error("Error:", error);
     }
   };
 
-  // Handle Google Login
+  useEffect(() => {
+    const fetchSession = async () => {
+      try {
+        const res = await GetSession();
+        console.log(res);
+        const { Token, User } = res.data;
+
+        if (Token && User) {
+          dispatch(getProfile(User));
+          dispatch(login(Token));
+          setShowLogin(false);
+          router.push("/"); // Redirect after successful login
+        } else {
+          handleToast("error", "Session fetching failed.");
+        }
+      } catch (error) {
+        handleToast("error", "An error occurred while fetching the session.");
+        console.error("Error:", error);
+      }
+    };
+
+    fetchSession();
+  }, []);
+
   const handleGoogleLogin = () => {
     if (!session) {
       signIn("google");
@@ -122,8 +142,8 @@ const Login: React.FC<Props> = ({ setShowLogin }) => {
     if (session) {
       setData((prevData) => ({
         ...prevData,
-        email: session.user?.email || "",
         image: session.user?.image || "",
+        email: session.user?.email || "",
         full_name: session.user?.name || "",
       }));
     }
@@ -135,29 +155,6 @@ const Login: React.FC<Props> = ({ setShowLogin }) => {
     }
   }, [data.isGoogle]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await GetSession();
-        const { Token, User } = res.data;
-
-        if (Token && User) {
-          dispatch(getProfile(User));
-          dispatch(login(Token));
-          setShowLogin(false);
-          router.push("/"); // Redirect after successful login
-        } else {
-          console.error("Error:", res.statusText);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  // Close when clicked outside card
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (cardRef.current && !cardRef.current.contains(event.target as Node)) {
@@ -191,79 +188,72 @@ const Login: React.FC<Props> = ({ setShowLogin }) => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {/* Google */}
-          <div
-            className={`${
-              showForm ? "hidden" : "flex"
-            } flex-col items-center justify-center space-y-4`}
-          >
-            <Button className="w-full border" onClick={handleGoogleLogin}>
-              <Icon icon="logos:google-icon" className="mr-2" />
-              Google
-            </Button>
-            <div>
-              atau masuk dengan{" "}
-              <span
-                className="text-blue-500 underline cursor-pointer"
-                onClick={() => setShowForm(true)}
-              >
-                email
-              </span>
-            </div>
-          </div>
-
-          {/* Form */}
-          <form
-            onSubmit={handleSubmit}
-            className={`${showForm ? "flex" : "hidden"} flex-col space-y-4`}
-          >
-            <div className="flex flex-col space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                value={data.email}
-                placeholder="user@mail.com"
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="flex flex-col space-y-2 relative">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type={showPassword ? "text" : "password"}
-                value={data.password}
-                placeholder="*********"
-                onChange={handleChange}
-                required={!data.isGoogle} // Password not required if signed in with Google
-                className="pr-10"
-              />
-              <Icon
-                icon={showPassword ? "mage:eye-off" : "mage:eye"}
-                className="text-gray-500 text-lg absolute cursor-pointer bg-transparent top-6 right-3"
-                onClick={() => setShowPassword(!showPassword)}
-              />
-              <Link
-                href="/forgot-password"
-                className="text-sm text-blue-500 mt-2 self-end"
-              >
-                Lupa password?
-              </Link>
-            </div>
-            <Button type="submit" className="w-full border">
-              Masuk
-            </Button>
-            <div className="text-center">
-              atau masuk dengan{" "}
-              <span
-                className="text-blue-500 underline cursor-pointer"
-                onClick={() => setShowForm(false)}
-              >
+          {!showForm ? (
+            <div className="flex flex-col items-center justify-center space-y-4">
+              <Button className="w-full border" onClick={handleGoogleLogin}>
+                <Icon icon="logos:google-icon" className="mr-2" />
                 Google
-              </span>
+              </Button>
+              <div>
+                atau masuk dengan{" "}
+                <span
+                  className="text-blue-500 underline cursor-pointer"
+                  onClick={() => setShowForm(true)}
+                >
+                  email
+                </span>
+              </div>
             </div>
-          </form>
+          ) : (
+            <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+              <div className="flex flex-col space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={data.email}
+                  placeholder="user@mail.com"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="flex flex-col space-y-2 relative">
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  value={data.password}
+                  placeholder="*********"
+                  onChange={handleChange}
+                  required={!data.isGoogle}
+                  className="pr-10"
+                />
+                <Icon
+                  icon={showPassword ? "mage:eye-off" : "mage:eye"}
+                  className="text-gray-500 text-lg absolute cursor-pointer bg-transparent top-6 right-3"
+                  onClick={() => setShowPassword(!showPassword)}
+                />
+                <Link
+                  href="/forgot-password"
+                  className="text-sm text-blue-500 mt-2 self-end"
+                >
+                  Lupa password?
+                </Link>
+              </div>
+              <Button type="submit" className="w-full border">
+                Masuk
+              </Button>
+              <div className="text-center">
+                atau masuk dengan{" "}
+                <span
+                  className="text-blue-500 underline cursor-pointer"
+                  onClick={() => setShowForm(false)}
+                >
+                  Google
+                </span>
+              </div>
+            </form>
+          )}
         </CardContent>
       </Card>
     </div>
