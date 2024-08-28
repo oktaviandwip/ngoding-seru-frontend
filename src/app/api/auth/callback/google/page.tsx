@@ -1,10 +1,10 @@
 "use client";
 
 // pages/api/auth/callback/google.ts
-import { getSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
-export default async function handler() {
-  const session = await getSession();
+export default function handler() {
+  const { data: session } = useSession();
 
   if (session) {
     // Handle authenticated session
