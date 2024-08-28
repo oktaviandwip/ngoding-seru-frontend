@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "@/store";
 import { login } from "@/store/reducer/auth";
 import { getProfile } from "@/store/reducer/user";
+import { signIn, useSession } from "next-auth/react";
 
 type Data = {
   email: string;
@@ -19,6 +20,7 @@ type Data = {
 export default function AuthCallback() {
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
+  const { data: session } = useSession();
 
   const [data, setData] = useState<Data>({
     email: "",
@@ -81,23 +83,23 @@ export default function AuthCallback() {
 
   // Fetch Session
   useEffect(() => {
-    const fetchSession = async () => {
-      const session = await getSession();
-      console.log(session);
-      if (session) {
-        setData((prevData) => ({
-          ...prevData,
-          email: session.user?.email || "",
-          image: session.user?.image || "",
-          isGoogle: true,
-        }));
-      } else {
-        console.log(data);
-        router.push("/");
-      }
-    };
+    // const fetchSession = async () => {
+    //   const session = await getSession();
+    //   console.log(session);
+    if (session) {
+      setData((prevData) => ({
+        ...prevData,
+        email: session.user?.email || "",
+        image: session.user?.image || "",
+        isGoogle: true,
+      }));
+    } else {
+      console.log(data);
+      router.push("/");
+    }
+    // };
 
-    fetchSession();
+    // fetchSession();
   }, []);
 
   useEffect(() => {
