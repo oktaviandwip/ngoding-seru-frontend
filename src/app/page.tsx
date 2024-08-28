@@ -22,6 +22,9 @@ import type { AppDispatch, RootState } from "@/store";
 import Login from "@/components/Login";
 import { getStat } from "@/store/reducer/stat";
 import { signIn, useSession } from "next-auth/react";
+import { toast } from "@/components/ui/use-toast";
+import { login } from "@/store/reducer/auth";
+import { getProfile } from "@/store/reducer/user";
 
 const frontendList = [
   { image: javascript, alt: "Javascript", link: "/javascript" },
@@ -44,34 +47,99 @@ const formatter = new Intl.NumberFormat("id-ID", {
   maximumFractionDigits: 0,
 });
 
-// Round Up Score
-function roundUp(number: number) {
-  const stringNumber = number.toString();
-  const decimalIndex = stringNumber.indexOf(".");
-  if (decimalIndex === -1) {
-    return number;
-  }
-  const lastTwoDigits = stringNumber.substring(
-    decimalIndex + 1,
-    decimalIndex + 3
-  );
-  const roundedLastTwoDigits = Math.ceil(parseFloat(lastTwoDigits));
-  const result = parseFloat(
-    stringNumber.substring(0, decimalIndex) + "." + roundedLastTwoDigits
-  );
-  return result;
-}
+type Data = {
+  email: string;
+  password: string;
+  isGoogle: boolean;
+  full_name: string;
+};
 
 export default function Home() {
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
 
   const [showLogin, setShowLogin] = useState(false);
+  const [data, setData] = useState<Data>({
+    email: "",
+    password: "",
+    isGoogle: false,
+    full_name: "",
+  });
 
   const { isAuth } = useSelector((state: RootState) => state.auth);
   const { profile } = useSelector((state: RootState) => state.user);
   const { stat } = useSelector((state: RootState) => state.stat);
   const { data: session } = useSession();
+
+  // Handle Toast
+  const handleToast = (type: "success" | "error", desc: string) => {
+    toast({
+      description: desc,
+      className: `fixed top-0 inset-x-0 md:w-96 md:mx-auto p-4 border-none rounded-lg z-[999] ${
+        type === "success"
+          ? "bg-success text-white"
+          : "bg-destructive text-white"
+      }`,
+    });
+  };
+
+  // Handle Submit
+  const handleSubmit = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/auth/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
+
+      if (response.ok) {
+        const res = await response.json();
+        const { Token, User } = res.data;
+
+        if (Token && User) {
+          dispatch(getProfile(User));
+          dispatch(login(Token));
+          setShowLogin(false);
+          router.push("/"); // Redirect after successful login
+        } else {
+          handleToast("error", "Unexpected error occurred.");
+        }
+      } else {
+        const errorData = await response.json();
+        handleToast("error", errorData.description || "Login failed.");
+      }
+    } catch (error) {
+      handleToast("error", "An error occurred while processing your request.");
+      console.error("Error:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (session) {
+      console.log("sampai");
+      setData((prevData) => ({
+        ...prevData,
+        image: session.user?.image || "",
+        email: session.user?.email || "",
+        full_name: session.user?.name || "",
+        isGoogle: true,
+      }));
+    } else {
+      console.log("sini");
+    }
+  }, [session]);
+
+  useEffect(() => {
+    if (data.isGoogle) {
+      handleSubmit();
+    }
+  }, [data.isGoogle]);
 
   // Handle Card Click
   const handleCardClick = (link: string) => {
