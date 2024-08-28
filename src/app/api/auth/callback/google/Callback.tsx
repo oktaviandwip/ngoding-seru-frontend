@@ -13,6 +13,7 @@ type Data = {
   email: string;
   password: string;
   isGoogle: boolean;
+  full_name: string;
 };
 
 export default function AuthCallback() {
@@ -23,6 +24,7 @@ export default function AuthCallback() {
     email: "",
     password: "",
     isGoogle: false,
+    full_name: "",
   });
 
   // Handle Toast
@@ -40,7 +42,7 @@ export default function AuthCallback() {
   // Handle Submit
   const handleSubmit = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    console.log("sampai");
+    console.log(data);
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/auth/`,
@@ -80,7 +82,6 @@ export default function AuthCallback() {
 
   // Fetch Session
   useEffect(() => {
-    console.log("sampai");
     const fetchSession = async () => {
       const session = await getSession();
       if (session) {

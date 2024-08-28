@@ -25,6 +25,7 @@ type Data = {
   email: string;
   password: string;
   isGoogle: boolean;
+  full_name: string;
 };
 
 type Props = {
@@ -39,6 +40,7 @@ const Login: React.FC<Props> = ({ setShowLogin }) => {
     email: "",
     password: "",
     isGoogle: false,
+    full_name: "",
   });
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showForm, setShowForm] = useState<boolean>(false);
@@ -69,7 +71,6 @@ const Login: React.FC<Props> = ({ setShowLogin }) => {
   // Handle Submit
   const handleSubmit = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    console.log("sampai");
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/auth/`,
