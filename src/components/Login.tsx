@@ -107,14 +107,13 @@ const Login: React.FC<Props> = ({ setShowLogin }) => {
 
   // Handle Google Login
   const handleGoogleLogin = () => {
-    if (!session) {
-      signIn("google", { callbackUrl: "/api/auth/callback/google" });
-    } else {
-      setData((prevData) => ({
-        ...prevData,
-        isGoogle: true,
-      }));
-    }
+    // if (!session) {
+    //   signIn("google", { callbackUrl: "/api/auth/callback/google" });
+    // } else {
+    setData((prevData) => ({
+      ...prevData,
+      isGoogle: true,
+    }));
   };
 
   useEffect(() => {
@@ -124,7 +123,6 @@ const Login: React.FC<Props> = ({ setShowLogin }) => {
         email: session.user?.email || "",
         image: session.user?.image || "",
         full_name: session.user?.name || "",
-        isGoogle: true,
       }));
     }
   }, [session]);
