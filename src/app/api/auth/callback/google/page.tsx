@@ -40,7 +40,7 @@ export default function AuthCallback() {
   // Handle Submit
   const handleSubmit = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-
+    console.log("sampai");
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/auth/`,
