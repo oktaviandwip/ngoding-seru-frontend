@@ -109,7 +109,7 @@ const Login: React.FC<Props> = ({ setShowLogin, session }) => {
 
   const handleGoogleLogin = () => {
     if (!session) {
-      signIn();
+      signIn("google");
     } else {
       setData((prevData) => ({
         ...prevData,
